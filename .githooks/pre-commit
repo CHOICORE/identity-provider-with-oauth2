@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# 프로젝트의 루트 디렉토리로 이동 (필요한 경우 경로를 수정하세요.)
+cd "$(git rev-parse --show-toplevel)"
+
+# ktlintCheck Gradle 작업 실행
+./gradlew ktlintCheck -w
+
+if [ $? -ne 0 ]; then
+#    echo "Ktlint check failed, trying to fix the issues automatically."
+#    ./gradlew ktlintFormat -w
+#
+#    if [ $? -ne 0 ]; then
+#        echo "Automatic format failed. Please fix the issues manually before committing."
+#        exit 1
+#    fi
+    exit 1
+fi
+
+exit 0

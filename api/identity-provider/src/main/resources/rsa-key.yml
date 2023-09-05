@@ -1,0 +1,3 @@
+rsa:
+    public-key: classpath:/keys/public-key.pem
+    private-key: classpath:/keys/private-key.pem
