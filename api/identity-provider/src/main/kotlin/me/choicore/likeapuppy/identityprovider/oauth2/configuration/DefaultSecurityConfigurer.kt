@@ -1,6 +1,5 @@
 package me.choicore.likeapuppy.identityprovider.oauth2.configuration
 
-import me.choicore.likeapuppy.identityprovider.oauth2.filter.AlreadyAuthenticatedAuthenticationFilter
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @EnableWebSecurity(debug = true)
@@ -34,7 +32,7 @@ class DefaultSecurityConfigurer {
 				logoutRequestMatcher = AntPathRequestMatcher("/logout")
 				permitAll()
 			}
-			addFilterBefore<UsernamePasswordAuthenticationFilter>(AlreadyAuthenticatedAuthenticationFilter())
+// 			addFilterBefore<UsernamePasswordAuthenticationFilter>(AlreadyAuthenticatedAuthenticationFilter())
 			authorizeHttpRequests {
 				authorize(matches = anyRequest, access = authenticated)
 			}
