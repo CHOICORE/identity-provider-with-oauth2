@@ -1,16 +1,16 @@
 server:
-    port: 9000
+  port: 9000
 
 spring:
-    security:
-        user:
-            name: 1
-            password: 1
+  security:
+    user:
+      name: 1
+      password: 1
 
-    config:
-        import:
-            - rsa-key.yml
+  config:
+    import:
+      - rsa-key.yml
 
 logging:
-    level:
-        web: trace
+  level:
+    web: trace
