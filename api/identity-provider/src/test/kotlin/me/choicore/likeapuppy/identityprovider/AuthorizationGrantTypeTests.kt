@@ -27,10 +27,12 @@ class AuthorizationGrantTypeTests(
 ) {
 
 	companion object {
-		private const val REDIRECT_URI = "http://127.0.0.1:8080/v1/oauth2/authorize"
+		private const val REDIRECT_URI = "http://127.0.0.1:8080/test"
+		private const val TOKEN_ENDPOINT = "/oauth2/token"
+		private const val AUTHORIZATION_URI = "/oauth2/authorize"
 
 		private val AUTHORIZATION_REQUEST: String = UriComponentsBuilder
-			.fromPath("/oauth2/authorize")
+			.fromPath(AUTHORIZATION_URI)
 			.queryParam("response_type", "code")
 			.queryParam("client_id", "like-a-puppy")
 			.queryParam("client_secret", "like-a-puppy")
@@ -58,12 +60,12 @@ class AuthorizationGrantTypeTests(
 		val code: String = checkNotNull(queryParams.getFirst("code"))
 
 		val authorizationUri = UriComponentsBuilder
-			.fromPath("/v1/oauth2/token")
+			.fromPath(TOKEN_ENDPOINT)
 			.queryParam("grant_type", "authorization_code")
 			.queryParam("code", code)
 			.queryParam("client_id", "like-a-puppy")
 			.queryParam("client_secret", "like-a-puppy")
-			.queryParam("scope", "profile")
+			.queryParam("scope", "openid")
 			.queryParam("redirect_uri", REDIRECT_URI)
 			.toUriString()
 
@@ -84,7 +86,7 @@ class AuthorizationGrantTypeTests(
 		val clientId: Pair<String, String> = Pair("client_id", "like-a-puppy")
 		val clientSecret: Pair<String, String> = Pair("client_secret", "like-a-puppy")
 
-		mockMvc.post("/v1/oauth2/token") {
+		mockMvc.post(TOKEN_ENDPOINT) {
 			headers {
 				HttpHeaders().setBasicAuth(clientId.second, clientSecret.second)
 			}
@@ -113,7 +115,7 @@ class AuthorizationGrantTypeTests(
 
 		// 1. Authorization Code Flow
 		val getAuthorizationCodeResult: MvcResult = mockMvc
-			.get("/oauth2/authorize") {
+			.get(AUTHORIZATION_URI) {
 				param("response_type", "code")
 				param(clientId.first, clientId.second)
 				param(clientSecret.first, clientSecret.second)
@@ -134,7 +136,7 @@ class AuthorizationGrantTypeTests(
 			UriComponentsBuilder.fromUriString(redirectedUrl).build().queryParams
 		// 2. Get Issued Token
 		val getIssuedTokenResult = mockMvc
-			.post("/v1/oauth2/token") {
+			.post(TOKEN_ENDPOINT) {
 				param("grant_type", "authorization_code")
 				param("code", checkNotNull(queryParams.getFirst("code")))
 				param(clientId.first, clientId.second)
@@ -180,7 +182,7 @@ class AuthorizationGrantTypeTests(
 
 		// 1. Authorization Code Flow
 		val getAuthorizationCodeResult: MvcResult = mockMvc
-			.get("/oauth2/authorize") {
+			.get(AUTHORIZATION_URI) {
 				param("response_type", "code")
 				param(clientId.first, clientId.second)
 				param(clientSecret.first, clientSecret.second)
@@ -202,7 +204,7 @@ class AuthorizationGrantTypeTests(
 
 		// 2. Get Issued Token
 		val getIssuedTokenResult =
-			mockMvc.post("/v1/oauth2/token") {
+			mockMvc.post(TOKEN_ENDPOINT) {
 				param("grant_type", "authorization_code")
 				param("code", checkNotNull(queryParams.getFirst("code")))
 				param(clientId.first, clientId.second)

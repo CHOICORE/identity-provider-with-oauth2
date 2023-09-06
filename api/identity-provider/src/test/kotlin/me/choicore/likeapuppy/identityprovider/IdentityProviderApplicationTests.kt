@@ -27,7 +27,7 @@ class IdentityProviderApplicationTests(
 
 	companion object {
 
-		private const val REDIRECT_URI = "http://127.0.0.1:8080/v1/oauth2/authorize"
+		private const val REDIRECT_URI = "http://127.0.0.1:8080/oauth2/authorize"
 
 		private val AUTHORIZATION_REQUEST = UriComponentsBuilder
 			.fromPath("/oauth2/authorize")
