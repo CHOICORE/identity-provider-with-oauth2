@@ -28,7 +28,6 @@ class DefaultSecurityConfigurer {
 		httpSecurity {
 			formLogin {
 				loginPage = "/login"
-				defaultSuccessUrl("/", true)
 				permitAll()
 			}
 			logout {

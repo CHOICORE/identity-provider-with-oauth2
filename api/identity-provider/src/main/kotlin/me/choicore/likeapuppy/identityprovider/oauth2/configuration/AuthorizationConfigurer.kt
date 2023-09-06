@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.core.oidc.OidcScopes
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationConsentService
 import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationService
-import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsent
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository
@@ -21,7 +20,6 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer
-import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings
 import org.springframework.security.web.SecurityFilterChain
@@ -61,12 +59,13 @@ class AuthorizationConfigurer {
 
 	@Bean
 	fun oauth2AuthorizationConsentService(): OAuth2AuthorizationConsentService {
-		val oauth2AuthorizationConsent: OAuth2AuthorizationConsent =
-			OAuth2AuthorizationConsent.withId("like-a-puppy", "1")
-				.scope(OidcScopes.OPENID)
-				.scope(OidcScopes.PROFILE)
-				.build()
-		return InMemoryOAuth2AuthorizationConsentService(oauth2AuthorizationConsent)
+// 		val oauth2AuthorizationConsent: OAuth2AuthorizationConsent =
+// 			OAuth2AuthorizationConsent.withId("like-a-puppy", "1")
+// 				.scope(OidcScopes.OPENID)
+// 				.scope(OidcScopes.PROFILE)
+// 				.build()
+// 		 return InMemoryOAuth2AuthorizationConsentService(oauth2AuthorizationConsent)
+		return InMemoryOAuth2AuthorizationConsentService()
 	}
 
 	@Bean
@@ -85,7 +84,7 @@ class AuthorizationConfigurer {
 				authorizationGrantType.add(AuthorizationGrantType.JWT_BEARER)
 			}
 			.redirectUris { redirectUri ->
-				redirectUri.add("http://127.0.0.1:8080/v1/oauth2/authorize")
+				redirectUri.add("http://127.0.0.1:8080/test")
 			}
 			.scope(OidcScopes.OPENID)
 			.scope(OidcScopes.PROFILE)
@@ -98,7 +97,7 @@ class AuthorizationConfigurer {
 			)
 			.clientSettings(
 				Builder.clientSettings {
-					requireAuthorizationConsent(false)
+					requireAuthorizationConsent(true)
 				},
 			)
 			.build()
@@ -108,13 +107,12 @@ class AuthorizationConfigurer {
 	@Bean
 	fun authorizationService(): OAuth2AuthorizationService = InMemoryOAuth2AuthorizationService()
 
-	@Bean
-	fun authorizationServerSettings(): AuthorizationServerSettings {
-		return AuthorizationServerSettings
-			.builder()
-			.tokenEndpoint("/v1/oauth2/token")
-			.build()
-	}
+// 	@Bean
+// 	fun authorizationServerSettings(): AuthorizationServerSettings {
+// 		return AuthorizationServerSettings
+// 			.builder()
+// 			.build()
+// 	}
 }
 
 object Builder {
