@@ -1,5 +1,5 @@
 plugins {
-	id("plugins.conventions.kotlin-with-spring-convention")
+	id("plugins.kotlin-with-spring-boot-conventions")
 }
 
 dependencies {

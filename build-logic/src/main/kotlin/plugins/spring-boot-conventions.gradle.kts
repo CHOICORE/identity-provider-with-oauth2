@@ -1,4 +1,4 @@
-package plugins.conventions
+package plugins
 
 plugins {
 	id("plugins.bases.java-base")

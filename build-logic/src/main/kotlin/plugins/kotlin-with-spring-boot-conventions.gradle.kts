@@ -1,7 +1,8 @@
-package plugins.conventions
+package plugins
+
 
 plugins {
-	id("plugins.conventions.spring-convention")
+	id("plugins.spring-boot-conventions")
 	id("plugins.bases.kotlin-base")
 	kotlin("plugin.spring")
 }
@@ -14,7 +15,6 @@ configurations {
 
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-//	implementation("org.jetbrains.kotlin:kotlin-allopen")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
