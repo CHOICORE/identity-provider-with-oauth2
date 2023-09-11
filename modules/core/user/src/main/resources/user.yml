@@ -1,0 +1,24 @@
+spring:
+  config:
+    import:
+      - user-jpa-local.yml
+      - optional:user-jpa-test.yml
+  profiles:
+    default: local
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    open-in-view: false
+    show-sql: false
+    database: h2
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        auto_quote_keyword: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    defer-datasource-initialization: true
