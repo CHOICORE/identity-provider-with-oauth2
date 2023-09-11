@@ -13,5 +13,7 @@ configurations {
 }
 
 dependencies {
-	compileOnly(libs.findLibrary("lombok").get())
+	val lombok: Provider<MinimalExternalModuleDependency> = libs.findLibrary("lombok").get()
+	compileOnly(lombok)
+	annotationProcessor(lombok)
 }
