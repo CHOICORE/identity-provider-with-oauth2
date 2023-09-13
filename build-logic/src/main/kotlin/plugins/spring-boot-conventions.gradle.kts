@@ -1,25 +1,25 @@
 package plugins
 
 plugins {
-	id("plugins.bases.java-base")
-	id("org.springframework.boot")
-	id("io.spring.dependency-management")
+    id("plugins.bases.java-base")
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
 
 dependencies {
 
-	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 springBoot {
-	// Creates META-INF/build-info.properties for Spring Boot Actuator
-	buildInfo()
+    // Creates META-INF/build-info.properties for Spring Boot Actuator
+    buildInfo()
 }

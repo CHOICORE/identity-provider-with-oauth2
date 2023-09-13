@@ -49,7 +49,7 @@ assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 [bundles]
 ## test
 junit = [
-	"junit-jupiter-api",
-	"junit-jupiter-params",
-	"assertj-core",
+    "junit-jupiter-api",
+    "junit-jupiter-params",
+    "assertj-core",
 ]
