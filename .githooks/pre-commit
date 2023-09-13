@@ -1,12 +1,50 @@
 #!/bin/sh
 
-# 프로젝트의 루트 디렉토리로 이동 (필요한 경우 경로를 수정하세요.)
-cd "$(git rev-parse --show-toplevel)"
+readonly KTLINT_REQUIRED_VERSION=1.0.0
+readonly KTLINT_INSTALL_GUIDE_LINK=https://pinterest.github.io/ktlint/$KTLINT_REQUIRED_VERSION/install/cli/#package-managers
 
-# ktlintCheck Gradle 작업 실행
-./gradlew ktlintCheck -w
+# Function to print error message and exit
+error_exit() {
+  printf '%s\n' "$1"
+  exit 1
+}
 
-if [ $? -ne 0 ]; then
+
+# Check ktlint installation
+if ! [ -x "$(command -v ktlint)" ]; then
+  error_exit "ktlint is not installed.
+
+Please install ktlint by referring to the link below.
+$KTLINT_INSTALL_GUIDE_LINK"
+fi
+
+# Check ktlint version
+KTLINT_CURRENT_VERSION="$(printf '%s\n' "$KTLINT_REQUIRED_VERSION" "$(ktlint --version)" | sort -V | head -n1)"
+if [ "$KTLINT_CURRENT_VERSION" != "$KTLINT_REQUIRED_VERSION" ]; then
+  error_exit "You need to update your ktlint version.
+Required version: $KTLINT_REQUIRED_VERSION Current version: $KTLINT_CURRENT_VERSION.
+Please update to the required version. (ex: brew upgrade ktlint)"
+fi
+
+# Execute ktlint
+EDITOR_CONFIG_PATH=$(git rev-parse --show-toplevel)
+if ! git diff --name-only --cached --relative \
+  | grep --color=never '\.kt[s"]\?$' \
+  | xargs ktlint --code-style=ktlint_official --editorconfig="$EDITOR_CONFIG_PATH" --relative; then
+
+    error_exit "ktlint has failed.
+Please check your changes before committing and ensure they pass through ktlint."
+fi
+
+exit 0
+
+## 프로젝트의 루트 디렉토리로 이동 (필요한 경우 경로를 수정하세요.)
+#cd "$(git rev-parse --show-toplevel)"
+#
+## ktlintCheck Gradle 작업 실행
+#./gradlew ktlintCheck -w
+#
+#if [ $? -ne 0 ]; then
 #    echo "Ktlint check failed, trying to fix the issues automatically."
 #    ./gradlew ktlintFormat -w
 #
@@ -14,7 +52,7 @@ if [ $? -ne 0 ]; then
 #        echo "Automatic format failed. Please fix the issues manually before committing."
 #        exit 1
 #    fi
-    exit 1
-fi
-
-exit 0
+##    exit 1
+#fi
+#
+#exit 0
