@@ -2,15 +2,10 @@ server:
   port: 9000
 
 spring:
-  security:
-    user:
-      name: 1
-      password: 1
-
   config:
     import:
       - rsa-key.yml
+      - user.yml
 
-logging:
-  level:
-    web: trace
+authentication:
+  login-attempts-limit: 5

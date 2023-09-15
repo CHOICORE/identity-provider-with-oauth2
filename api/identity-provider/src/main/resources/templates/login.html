@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8"/>
-	<meta content="width=device-width, initial-scale=1" name="viewport">
-	<title>Like a Puppy OAuth2 Identity Provider</title>
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css}"/>
-	<link rel="stylesheet" th:href="@{/css/login.css}"/>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Like a Puppy OAuth2 Identity Provider</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
 </head>
 <body>
 <div class="container">
-	<form class="form-login w-100 m-auto" method="post" th:action="@{/login}">
-		<div class="alert alert-danger" role="alert" th:if="${param.error}">
-			Invalid username or password.
-		</div>
-		<div class="alert alert-success" role="alert" th:if="${param.logout}">
-			You have been logged out.
-		</div>
-		<h3 class="h3 mb-3 fw-normal">개같이 로그인</h3>
-		<div class="form-floating">
-			<input autofocus class="form-control" id="username" name="username" required type="text">
-			<label for="username">Username</label>
-		</div>
-		<div class="form-floating">
-			<input class="form-control" id="password" name="password" required type="password">
-			<label for="password">Password</label>
-		</div>
-		<div>
-			<button class="w-100 btn btn-sm btn-primary btn-block" type="submit">로그인</button>
-			<button class="w-100 btn btn-sm btn-light btn-block bg-white" style="margin-top: 10px" type="button">회원가입
-			</button>
-		</div>
-	</form>
+    <form class="form-login w-100 m-auto" method="post" th:action="@{/login}">
+        <div class="alert alert-success" role="alert" th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <h3 class="h3 mb-3 fw-normal">개같이 로그인</h3>
+        <div class="form-floating">
+            <input autofocus class="form-control" id="username" name="username" required type="text">
+            <label for="username">Username</label>
+        </div>
+        <div class="form-floating">
+            <input class="form-control" id="password" name="password" required type="password">
+            <label for="password">Password</label>
+        </div>
+        <div class="alert alert-danger" role="alert" th:if="${errorMessage}">
+            <span th:text="${errorMessage.message}"></span>
+        </div>
+        <div>
+            <button class="w-100 btn btn-sm btn-block btn-primary " type="submit">로그인</button>
+            <button class="w-100 btn btn-sm btn-block btn-light bg-white" style="margin-top: 10px" type="button">회원가입
+            </button>
+        </div>
+    </form>
 </div>
 </body>
 </html>
