@@ -1,4 +1,4 @@
-package me.choicore.likeapuppy.identityprovider.oauth2.configuration
+package me.choicore.likeapuppy.identityprovider.configuration.oauth2
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

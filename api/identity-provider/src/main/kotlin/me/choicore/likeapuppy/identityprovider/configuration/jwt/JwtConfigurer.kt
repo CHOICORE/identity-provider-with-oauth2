@@ -1,4 +1,4 @@
-package me.choicore.likeapuppy.identityprovider.oauth2.configuration
+package me.choicore.likeapuppy.identityprovider.configuration.jwt
 
 import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jose.jwk.RSAKey
