@@ -80,9 +80,7 @@ sealed class UnauthorizedException(
     )
 }
 
-fun getUnauthorizedError(
-    authenticationException: AuthenticationException,
-): UnauthorizedException {
+fun getUnauthorizedError(authenticationException: AuthenticationException): UnauthorizedException {
     return when (authenticationException) {
         is UnauthorizedException -> authenticationException
         is BadCredentialsException -> UnauthorizedException.InvalidPassword

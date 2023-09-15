@@ -36,7 +36,6 @@ class AuthenticationEventListener(
      * it means the user has been authenticated successfully
      *
      * @param success the event
-     *
      */
     @EventListener
     @Transactional
@@ -51,7 +50,6 @@ class AuthenticationEventListener(
      * it means the user has failed to authenticate
      *
      * @param failures the event
-     *
      */
     @EventListener
     @Transactional

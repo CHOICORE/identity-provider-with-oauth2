@@ -64,10 +64,9 @@ class UserDetailsService(
      * @throws UsernameNotFoundException if the user could not be found.
      */
     @Throws(UsernameNotFoundException::class)
-    private fun getUserInfo(identifier: String): UserEntity =
-        userRepository.findByIdentifierOrNull(identifier) ?: throw UsernameNotFoundException(
-            "User with identifier [$identifier] could not be found.",
-        )
+    private fun getUserInfo(identifier: String): UserEntity = userRepository.findByIdentifierOrNull(identifier) ?: throw UsernameNotFoundException(
+        "User with identifier [$identifier] could not be found.",
+    )
 
     /**
      * Retrieves a collection of authorities that have been granted to the specified user.
@@ -75,10 +74,9 @@ class UserDetailsService(
      * @param user The [UserEntity] for whom the authorities are to be retrieved.
      * @return A collection of [SimpleGrantedAuthority] objects representing the authorities granted to the user.
      */
-    private fun getGrantedAuthorities(user: UserEntity): MutableSet<SimpleGrantedAuthority> =
-        user.grantedAuthorities.mapTo(mutableSetOf()) { grantedAuthority: GrantedAuthority ->
-            SimpleGrantedAuthority(grantedAuthority.authority.name)
-        }
+    private fun getGrantedAuthorities(user: UserEntity): MutableSet<SimpleGrantedAuthority> = user.grantedAuthorities.mapTo(mutableSetOf()) { grantedAuthority: GrantedAuthority ->
+        SimpleGrantedAuthority(grantedAuthority.authority.name)
+    }
 
     private val AccountStatus.isEnable
         get() = isAccountNonExpired && isAccountNonLocked && isCredentialsNonExpired

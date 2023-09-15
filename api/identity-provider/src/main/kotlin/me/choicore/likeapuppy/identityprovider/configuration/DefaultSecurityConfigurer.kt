@@ -28,9 +28,7 @@ class DefaultSecurityConfigurer {
 
     @Bean
     @Order(2)
-    fun defaultSecurityFilterChain(
-        httpSecurity: HttpSecurity,
-    ): SecurityFilterChain {
+    fun defaultSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
         httpSecurity {
             formLogin {
                 loginPage = "/login"
@@ -60,8 +58,7 @@ class DefaultSecurityConfigurer {
     }
 
     @Bean
-    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager =
-        authenticationConfiguration.authenticationManager
+    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager = authenticationConfiguration.authenticationManager
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()

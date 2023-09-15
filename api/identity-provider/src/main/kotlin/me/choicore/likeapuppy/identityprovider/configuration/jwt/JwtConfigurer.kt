@@ -14,27 +14,25 @@ import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.util.UUID
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class JwtConfigurer(
-	private val rsaKeyProperties: RSAKeyProperties,
+    private val rsaKeyProperties: RSAKeyProperties,
 ) {
 
-	@Bean
-	fun jwtDecoder(
-		jwkSource: JWKSource<SecurityContext>,
-	): JwtDecoder {
-		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource)
-	}
+    @Bean
+    fun jwtDecoder(jwkSource: JWKSource<SecurityContext>): JwtDecoder {
+        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource)
+    }
 
-	@Bean
-	fun jwkSource(): JWKSource<SecurityContext> {
-		val rsaPublicKey: RSAPublicKey = rsaKeyProperties.publicKey
-		val rsaPrivateKey: RSAPrivateKey = rsaKeyProperties.privateKey
-		val rsaKey: RSAKey = RSAKey.Builder(rsaPublicKey)
-			.privateKey(rsaPrivateKey)
-			.keyID(UUID.randomUUID().toString())
-			.build()
-		val jwkSet = JWKSet(rsaKey)
-		return ImmutableJWKSet(jwkSet)
-	}
+    @Bean
+    fun jwkSource(): JWKSource<SecurityContext> {
+        val rsaPublicKey: RSAPublicKey = rsaKeyProperties.publicKey
+        val rsaPrivateKey: RSAPrivateKey = rsaKeyProperties.privateKey
+        val rsaKey: RSAKey = RSAKey.Builder(rsaPublicKey)
+            .privateKey(rsaPrivateKey)
+            .keyID(UUID.randomUUID().toString())
+            .build()
+        val jwkSet = JWKSet(rsaKey)
+        return ImmutableJWKSet(jwkSet)
+    }
 }
