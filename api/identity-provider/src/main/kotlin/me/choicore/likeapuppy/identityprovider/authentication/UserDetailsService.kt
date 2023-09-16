@@ -64,9 +64,10 @@ class UserDetailsService(
      * @throws UsernameNotFoundException if the user could not be found.
      */
     @Throws(UsernameNotFoundException::class)
-    private fun getUserInfo(identifier: String): UserEntity = userRepository.findByIdentifierOrNull(identifier) ?: throw UsernameNotFoundException(
-        "User with identifier [$identifier] could not be found.",
-    )
+    private fun getUserInfo(identifier: String): UserEntity =
+        userRepository.findByIdentifierOrNull(identifier) ?: throw UsernameNotFoundException(
+            "User with identifier [$identifier] could not be found.",
+        )
 
     /**
      * Retrieves a collection of authorities that have been granted to the specified user.
@@ -74,19 +75,20 @@ class UserDetailsService(
      * @param user The [UserEntity] for whom the authorities are to be retrieved.
      * @return A collection of [SimpleGrantedAuthority] objects representing the authorities granted to the user.
      */
-    private fun getGrantedAuthorities(user: UserEntity): MutableSet<SimpleGrantedAuthority> = user.grantedAuthorities.mapTo(mutableSetOf()) { grantedAuthority: GrantedAuthority ->
-        SimpleGrantedAuthority(grantedAuthority.authority.name)
-    }
+    private fun getGrantedAuthorities(user: UserEntity): MutableSet<SimpleGrantedAuthority> =
+        user.grantedAuthorities.mapTo(mutableSetOf()) { grantedAuthority: GrantedAuthority ->
+            SimpleGrantedAuthority(grantedAuthority.authority.name)
+        }
 
-    private val AccountStatus.isEnable
+    private val AccountStatus.isEnable: Boolean
         get() = isAccountNonExpired && isAccountNonLocked && isCredentialsNonExpired
 
-    private val AccountStatus.isAccountNonExpired
+    private val AccountStatus.isAccountNonExpired: Boolean
         get() = !isDormant()
 
-    private val AccountStatus.isAccountNonLocked
+    private val AccountStatus.isAccountNonLocked: Boolean
         get() = !isLoginAttemptsExceeded(authenticationProperties.loginAttemptsLimit) && !isDormant()
 
-    private val AccountStatus.isCredentialsNonExpired
-        get() = this.passwordExpirationAt?.isBefore(Instant.now()) ?: true
+    private val AccountStatus.isCredentialsNonExpired: Boolean
+        get() = this.passwordExpirationAt.isAfter(Instant.now())
 }
