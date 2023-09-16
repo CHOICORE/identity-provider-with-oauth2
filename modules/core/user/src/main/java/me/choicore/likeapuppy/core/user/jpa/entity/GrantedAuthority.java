@@ -17,48 +17,36 @@ import java.time.Instant;
 @Table(name = "granted_authority")
 public class GrantedAuthority {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "user_id")
-	private Long userId;
+    @Column(name = "user_id")
+    private Long userId;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "authority_id")
-	private Authority authority;
+    @ManyToOne
+    @JoinColumn(name = "authority_id")
+    private Authority authority;
 
-	private Instant grantedAt;
-
-
-	/**
-	 * @param id        PK
-	 * @param userId    FK
-	 * @param authority Authority
-	 * @param grantedAt Granted At
-	 */
-	@Builder
-	public GrantedAuthority(
-			final Long id,
-			final Long userId,
-			final Authority authority,
-			final Instant grantedAt
-	) {
-		this.id = id;
-		this.userId = userId;
-		this.authority = authority;
-		this.grantedAt = grantedAt;
-	}
+    private Instant grantedAt;
 
 
-	public GrantedAuthority(
-			final Long userId,
-			final Authority authority,
-			final Instant grantedAt
-	) {
-		this.id = null;
-		this.userId = userId;
-		this.authority = authority;
-		this.grantedAt = grantedAt;
-	}
+    /**
+     * @param id        PK
+     * @param userId    FK
+     * @param authority Authority
+     * @param grantedAt Granted At
+     */
+    @Builder
+    public GrantedAuthority(
+            final Long id,
+            final Long userId,
+            final Authority authority,
+            final Instant grantedAt
+    ) {
+        this.id = id;
+        this.userId = userId;
+        this.authority = authority;
+        this.grantedAt = grantedAt;
+    }
 }

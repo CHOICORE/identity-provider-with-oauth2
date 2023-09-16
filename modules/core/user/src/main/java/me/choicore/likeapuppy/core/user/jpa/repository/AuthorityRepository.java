@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authority, Long> {
 
-	Optional<Authority> findByName(String name);
+    Optional<Authority> findByName(String name);
 
-	List<Authority> findByScope(String scope);
+    List<Authority> findByScope(String scope);
 }
