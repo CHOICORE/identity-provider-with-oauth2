@@ -29,42 +29,38 @@ class AdminUserInitializer(
 
     @Transactional
     override fun run(args: ApplicationArguments) {
-        val email = "1"
-        val mobile = "01012341234"
-        val password = passwordEncoder.encode("1")
-        val firstName = "Jae-hyeong"
-        val lastName = "Choi"
-        val gender = Gender.M
-        val nickname = "최코어"
-        val picture = ""
+        val password: String = passwordEncoder.encode("1")
+
         val userAuthorityTypes: MutableSet<UserAuthorityType> =
             mutableSetOf(UserAuthorityType.USER, UserAuthorityType.ADMIN)
 
-        val username = Username(firstName, lastName)
-        val identifier = Identifier(email, mobile)
-        val credential = Credential(identifier, password)
-        val accountStatus = AccountStatus(0, null, Instant.now(), false, null, false, null)
-        val registerUser = User.builder()
-            .credential(credential)
-            .username(username)
-            .nickname(nickname)
-            .picture(picture)
-            .gender(gender)
+        val identifier: Identifier = Identifier("1", "01012341234")
+
+        val accountStatus: AccountStatus = AccountStatus.withVerifiedCredentials().build()
+
+        val registeredAt: Instant = Instant.now()
+
+        val registerUser: User = User.builder()
+            .credential(Credential(identifier, password))
+            .username(Username("Jae-hyeong", "Choi"))
+            .nickname("CHOICORE")
+            .picture("")
+            .gender(Gender.M)
             .accountStatus(accountStatus)
-            .registeredAt(Instant.now())
+            .registeredAt(registeredAt)
             .build()
 
         userRepository.save(registerUser)
 
         authorityRepository.findByScope("ACCOUNT")
             .filter { authority: Authority -> userAuthorityTypes.contains(UserAuthorityType.valueOf(authority.name)) }
-            .map {
-                GrantedAuthority.builder()
+            .forEach {
+                val grantedAuthority: GrantedAuthority = GrantedAuthority.builder()
                     .authority(it)
                     .userId(registerUser.id)
-                    .grantedAt(Instant.now())
+                    .grantedAt(registeredAt)
                     .build()
+                grantedAuthorityRepository.save(grantedAuthority)
             }
-            .forEach { grantedAuthorityRepository.save(it) }
     }
 }
