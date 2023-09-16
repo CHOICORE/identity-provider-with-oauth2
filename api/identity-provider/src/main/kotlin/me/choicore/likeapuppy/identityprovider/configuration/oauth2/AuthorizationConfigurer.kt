@@ -19,7 +19,10 @@ class AuthorizationConfigurer {
 
     @Bean
     @Order(1)
-    fun authorizationServerSecurityFilterChain(httpSecurity: HttpSecurity, jwtDecoder: JwtDecoder): SecurityFilterChain {
+    fun authorizationServerSecurityFilterChain(
+        httpSecurity: HttpSecurity,
+        jwtDecoder: JwtDecoder,
+    ): SecurityFilterChain {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(httpSecurity)
         httpSecurity
             .getConfigurer(OAuth2AuthorizationServerConfigurer::class.java)

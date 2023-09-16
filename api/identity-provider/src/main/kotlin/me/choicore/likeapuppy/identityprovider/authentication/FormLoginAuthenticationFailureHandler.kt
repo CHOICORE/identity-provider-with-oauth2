@@ -9,7 +9,11 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 class FormLoginAuthenticationFailureHandler : SimpleUrlAuthenticationFailureHandler() {
 
-    override fun onAuthenticationFailure(request: HttpServletRequest, response: HttpServletResponse, exception: AuthenticationException) {
+    override fun onAuthenticationFailure(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        exception: AuthenticationException,
+    ) {
         request.setAttribute(UNAUTHORIZED_ERROR, getUnauthorizedError(exception))
         super.onAuthenticationFailure(request, response, exception)
     }

@@ -7,7 +7,11 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 
 class FormLoginAuthenticationSuccessHandler : SimpleUrlAuthenticationSuccessHandler() {
 
-    override fun onAuthenticationSuccess(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication) {
+    override fun onAuthenticationSuccess(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        authentication: Authentication,
+    ) {
         super.onAuthenticationSuccess(request, response, authentication)
     }
 }
