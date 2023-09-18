@@ -13,6 +13,9 @@
         <div class="alert alert-success" role="alert" th:if="${param.logout}">
             로그아웃 되었습니다.
         </div>
+
+        <div class="alert alert-danger" role="alert" th:if="${param.error}">
+        </div>
         <h3 class="h3 mb-3 fw-normal">개같이 로그인</h3>
         <div class="form-floating">
             <input autofocus class="form-control" id="username" name="username" required type="text">
@@ -22,11 +25,11 @@
             <input class="form-control" id="password" name="password" required type="password">
             <label for="password">Password</label>
         </div>
-        <div class="alert alert-danger" role="alert" th:if="${errorMessage}">
-            <span th:text="${errorMessage.message}"></span>
+        <div class="alert alert-danger" role="alert" th:if="${UNAUTHORIZED_ERROR}">
+            <span th:text="${UNAUTHORIZED_ERROR.message}"></span>
         </div>
         <div>
-            <button class="w-100 btn btn-sm btn-block btn-primary " type="submit">로그인</button>
+            <button class="w-100 btn btn-sm btn-block btn-primary" type="submit">로그인</button>
             <button class="w-100 btn btn-sm btn-block btn-light bg-white" style="margin-top: 10px" type="button">회원가입
             </button>
         </div>
