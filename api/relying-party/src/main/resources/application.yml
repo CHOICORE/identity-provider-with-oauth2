@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    root: info
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          like-a-puppy:
+            issuer-uri: http://127.0.0.1:9000
+        registration:
+          like-a-puppy-developer-client:
+            provider: like-a-puppy
+            client-id: like-a-puppy
+            client-secret: like-a-puppy-secret
+            scope: openid,profile,phone,email

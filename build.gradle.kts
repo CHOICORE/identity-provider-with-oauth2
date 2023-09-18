@@ -1,6 +1,6 @@
 plugins {
-	`kotlin-dsl`
-	alias(libs.plugins.ktlint)
+    `kotlin-dsl`
+    alias(libs.plugins.ktlint)
 }
 
 group = "me.choicore.likeapuppy"
