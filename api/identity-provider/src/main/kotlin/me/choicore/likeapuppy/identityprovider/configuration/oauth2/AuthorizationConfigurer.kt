@@ -29,7 +29,7 @@ class AuthorizationConfigurer {
             .oidc(Customizer.withDefaults())
         httpSecurity {
             oauth2ResourceServer {
-                jwt {}
+                jwt { }
             }
             exceptionHandling {
                 defaultAuthenticationEntryPointFor(
@@ -37,7 +37,9 @@ class AuthorizationConfigurer {
                     MediaTypeRequestMatcher(MediaType.TEXT_HTML),
                 )
             }
+            cors { }
         }
+
         return httpSecurity.build()
     }
 }

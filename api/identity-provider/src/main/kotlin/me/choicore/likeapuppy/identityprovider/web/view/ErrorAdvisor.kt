@@ -1,7 +1,7 @@
 package me.choicore.likeapuppy.identityprovider.web.view
 
 import jakarta.servlet.http.HttpServletRequest
-import me.choicore.likeapuppy.identityprovider.exception.UNAUTHORIZED_ERROR
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.boot.web.servlet.error.ErrorController
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 class ErrorAdvisor : ErrorController {
 
     @RequestMapping("/error")
-    fun handleError(model: Model, request: HttpServletRequest): String {
-        model.addAttribute("errorMessage", request.getAttribute(UNAUTHORIZED_ERROR))
-        return "/login"
+    fun handleError(
+        model: Model,
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+    ): String {
+        return "/error"
     }
 }

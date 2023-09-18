@@ -1,6 +1,9 @@
 package me.choicore.likeapuppy.identityprovider.exception
 
-enum class UnauthorizedErrorCode(val code: String, val type: UnauthorizedErrorType) {
+enum class UnauthorizedErrorCode(
+    val code: String,
+    val type: UnauthorizedErrorType,
+) {
 
     INTERNAL_ERROR(
         code = "0001",

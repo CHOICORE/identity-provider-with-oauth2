@@ -1,6 +1,5 @@
 package me.choicore.likeapuppy.identityprovider.authentication
 
-import me.choicore.likeapuppy.core.user.jpa.entity.User
 import me.choicore.likeapuppy.core.user.jpa.repository.UserRepository
 import me.choicore.likeapuppy.identityprovider.common.Slf4j
 import me.choicore.likeapuppy.identityprovider.common.findByIdentifierOrNull
@@ -16,10 +15,12 @@ import org.springframework.security.authentication.LockedException
 import org.springframework.security.authentication.ProviderNotFoundException
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent
+import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
+import me.choicore.likeapuppy.core.user.jpa.entity.User as UserEntity
 
 /**
  * This class is responsible for listening to the authentication events
@@ -40,10 +41,14 @@ class AuthenticationEventListener(
     @EventListener
     @Transactional
     fun onSuccess(success: AuthenticationSuccessEvent) {
-        val user: User = getUserInfo(success.authentication.name)
+        logger.info("AuthenticationSuccessEvent: ${success.authentication.name}")
 
-        /* mark the user account status as logged in */
-        user.accountStatus.markAsLoggedIn()
+        if (success.authentication.principal is User) {
+            val identifier: String = success.authentication.name
+            val user: UserEntity = getUserInfo(identifier)
+            /* mark the user account status as logged in */
+            user.accountStatus.markAsLoggedIn()
+        }
     }
 
     /**
@@ -54,7 +59,7 @@ class AuthenticationEventListener(
     @EventListener
     @Transactional
     fun onFailure(failures: AbstractAuthenticationFailureEvent) {
-        val userInfo: User = getUserInfo(failures.authentication.name)
+        val userInfo: UserEntity = getUserInfo(failures.authentication.name)
         when (failures.exception) {
             is BadCredentialsException -> {
                 /* mark the user account status as failed to log in */
@@ -90,7 +95,7 @@ class AuthenticationEventListener(
      * @throws UnauthorizedException.AccountNotFound if the user is not found
      */
     @Throws(UnauthorizedException::class)
-    private fun getUserInfo(identifier: String): User {
+    private fun getUserInfo(identifier: String): UserEntity {
         return userRepository.findByIdentifierOrNull(identifier) ?: throw UnauthorizedException.AccountNotFound
     }
 }

@@ -9,9 +9,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
 import org.springframework.security.authentication.AuthenticationEventPublisher
-import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -28,12 +26,14 @@ class DefaultSecurityConfigurer {
 
     @Bean
     @Order(2)
-    fun defaultSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
+    fun defaultSecurityFilterChain(
+        httpSecurity: HttpSecurity,
+    ): SecurityFilterChain {
         httpSecurity {
             formLogin {
                 loginPage = "/login"
                 authenticationSuccessHandler = FormLoginAuthenticationSuccessHandler()
-                authenticationFailureHandler = FormLoginAuthenticationFailureHandler()
+                authenticationFailureHandler = FormLoginAuthenticationFailureHandler("/login-error")
                 permitAll()
             }
             logout {
@@ -43,6 +43,7 @@ class DefaultSecurityConfigurer {
             authorizeHttpRequests {
                 authorize(matches = anyRequest, access = authenticated)
             }
+            cors { }
         }
         return httpSecurity.build()
     }
@@ -52,20 +53,19 @@ class DefaultSecurityConfigurer {
         webSecurity.ignoring().requestMatchers(
             AntPathRequestMatcher("/assets/**"),
             AntPathRequestMatcher("/error/**"),
+            AntPathRequestMatcher("/login-error"),
             toStaticResources().atCommonLocations(),
             toH2Console(),
         )
     }
 
     @Bean
-    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager =
-        authenticationConfiguration.authenticationManager
-
-    @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun authenticationEventPublisher(applicationEventPublisher: ApplicationEventPublisher?): AuthenticationEventPublisher {
+    fun authenticationEventPublisher(
+        applicationEventPublisher: ApplicationEventPublisher?,
+    ): AuthenticationEventPublisher {
         return DefaultAuthenticationEventPublisher(applicationEventPublisher)
     }
 }
