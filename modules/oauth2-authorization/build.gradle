@@ -1,0 +1,17 @@
+plugins {
+    id 'java-library'
+    id 'plugins.spring-boot-conventions'
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    api 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'com.h2database:h2'
+}
