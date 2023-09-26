@@ -5,5 +5,6 @@ import java.time.Instant
 
 data class GrantedAuthority(
     val authority: Authority,
+    val scope: String,
     val grantedAt: Instant,
 )
