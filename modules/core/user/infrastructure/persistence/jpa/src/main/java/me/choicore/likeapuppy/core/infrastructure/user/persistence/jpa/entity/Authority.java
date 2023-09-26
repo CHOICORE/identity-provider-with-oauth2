@@ -1,6 +1,10 @@
-package me.choicore.likeapuppy.core.user.jpa.entity;
+package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "authority")
+
 public class Authority {
 
     @Id

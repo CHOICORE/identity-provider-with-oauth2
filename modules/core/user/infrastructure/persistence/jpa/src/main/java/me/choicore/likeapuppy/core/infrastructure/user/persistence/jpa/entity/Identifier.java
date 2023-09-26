@@ -1,4 +1,4 @@
-package me.choicore.likeapuppy.core.user.jpa.entity;
+package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity;
 
 
 import jakarta.persistence.Column;
@@ -15,13 +15,13 @@ public class Identifier {
     private String email;
 
     @Column(unique = true, length = 20)
-    private String mobile;
+    private String phoneNumber;
 
     public Identifier(
             final String email,
-            final String mobile
+            final String phoneNumber
     ) {
         this.email = email;
-        this.mobile = mobile;
+        this.phoneNumber = phoneNumber;
     }
 }

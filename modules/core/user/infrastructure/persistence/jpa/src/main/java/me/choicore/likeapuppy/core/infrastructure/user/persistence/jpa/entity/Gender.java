@@ -1,4 +1,4 @@
-package me.choicore.likeapuppy.core.user.jpa.entity;
+package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity;
 
 /**
  * 성별 열거형 상수 정의
