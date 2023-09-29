@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Identifier {
+public class UserIdentifierEntity {
     @Column(unique = true, length = 50)
     private String email;
 
     @Column(unique = true, length = 20)
     private String phoneNumber;
 
-    public Identifier(
+    public UserIdentifierEntity(
             final String email,
             final String phoneNumber
     ) {

@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,27 +24,42 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user")
-public class User {
+public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
     @Embedded
-    private Authentication authentication;
+    private AuthenticationEntity authentication;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Profile profile;
+    private UserProfileEntity profile;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
+    private List<UserGrantedAuthorityEntity> grantedAuthorities = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private List<Consent> consents = new ArrayList<>();
+    private List<UserConsentEntity> consents = new ArrayList<>();
 
     @Embedded
-    private Verification verification;
+    private VerificationEntity verification;
+
+    @Builder
+    private UserEntity(
+            AuthenticationEntity authentication,
+            UserProfileEntity profile,
+            List<UserGrantedAuthorityEntity> grantedAuthorities,
+            List<UserConsentEntity> consents,
+            VerificationEntity verification
+    ) {
+        this.authentication = authentication;
+        this.profile = profile;
+        this.grantedAuthorities = grantedAuthorities;
+        this.consents = consents;
+        this.verification = verification;
+    }
 }

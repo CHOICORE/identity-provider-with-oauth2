@@ -7,7 +7,7 @@ package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity;
  * F: 여성
  * U: 기타
  */
-public enum Gender {
+public enum GenderEntity {
     /**
      * 남성
      */

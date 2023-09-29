@@ -21,8 +21,8 @@ import java.time.Instant;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "granted_authority")
-public class GrantedAuthority {
+@Table(name = "user_granted_authority")
+public class UserGrantedAuthorityEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class GrantedAuthority {
 
     @ManyToOne
     @JoinColumn(name = "authority_id")
-    private Authority authority;
+    private AuthorityEntity authorityEntity;
 
     private Instant grantedAt;
 
@@ -41,19 +41,19 @@ public class GrantedAuthority {
     /**
      * @param id        PK
      * @param userId    FK
-     * @param authority Authority
+     * @param authorityEntity Authority
      * @param grantedAt Granted At
      */
     @Builder
-    public GrantedAuthority(
+    public UserGrantedAuthorityEntity(
             final Long id,
             final Long userId,
-            final Authority authority,
+            final AuthorityEntity authorityEntity,
             final Instant grantedAt
     ) {
         this.id = id;
         this.userId = userId;
-        this.authority = authority;
+        this.authorityEntity = authorityEntity;
         this.grantedAt = grantedAt;
     }
 }

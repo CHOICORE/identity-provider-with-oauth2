@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "authority")
-
-public class Authority {
+@Builder
+public class AuthorityEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +33,7 @@ public class Authority {
      * @param scope       권한 범위
      * @param description 권한 설명
      */
-    @Builder
-    public Authority(
+    public AuthorityEntity(
             final Long id,
             final String name,
             final String scope,

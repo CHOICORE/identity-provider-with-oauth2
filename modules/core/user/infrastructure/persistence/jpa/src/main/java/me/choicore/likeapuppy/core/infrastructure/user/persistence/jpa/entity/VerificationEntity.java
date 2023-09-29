@@ -9,7 +9,7 @@ import java.time.Instant;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Verification {
+public class VerificationEntity {
 
     private boolean emailVerified;
 

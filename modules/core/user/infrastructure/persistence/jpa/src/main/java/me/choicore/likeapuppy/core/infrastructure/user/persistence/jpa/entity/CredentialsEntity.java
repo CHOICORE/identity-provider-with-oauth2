@@ -11,12 +11,14 @@ import java.time.Instant;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class Credentials {
+public class CredentialsEntity {
 
     private String password;
-
     @ColumnDefault("0")
-    private int failedLoginAttempts = 0;
-
+    private final int failedLoginAttempts = 0;
     private Instant passwordExpirationAt;
+
+    public CredentialsEntity(String password) {
+        this.password = password;
+    }
 }
