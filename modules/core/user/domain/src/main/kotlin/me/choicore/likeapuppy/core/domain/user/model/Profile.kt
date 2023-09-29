@@ -4,7 +4,7 @@ import me.choicore.likeapuppy.core.domain.Validator
 import me.choicore.likeapuppy.core.domain.user.model.constant.Gender
 
 data class Profile(
-    val nickname: String,
+    val nickname: String?,
     val username: Username,
     val dateOfBirth: DateOfBirth,
     val gender: Gender,

@@ -19,7 +19,4 @@ data class Authentication(
     val credentials: Credentials,
     val lastLoggedInAt: Instant? = null,
     val registeredAt: Instant,
-    val isAccountNonExpired: Boolean = true,
-    val isCredentialsNonExpired: Boolean = true,
-    val isAccountNonLocked: Boolean = true,
 )

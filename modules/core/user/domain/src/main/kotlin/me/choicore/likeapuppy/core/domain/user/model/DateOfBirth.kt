@@ -33,4 +33,11 @@ data class DateOfBirth(
             throw DateTimeException("Invalid date of birth: ${this.year}-${this.month}-${this.dayOfMonth}")
         }
     }
+
+    companion object {
+        @JvmStatic
+        fun of(dateOfBirth: LocalDate): DateOfBirth {
+            return DateOfBirth(dateOfBirth.year, dateOfBirth.monthValue, dateOfBirth.dayOfMonth)
+        }
+    }
 }

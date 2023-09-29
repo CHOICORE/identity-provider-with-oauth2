@@ -7,6 +7,7 @@ data class User(
     val profile: Profile,
     val authentication: Authentication,
     val grantedAuthorities: List<GrantedAuthority>,
+    val consents: List<Consent>,
     val verification: Verification,
 ) : Validator {
 
