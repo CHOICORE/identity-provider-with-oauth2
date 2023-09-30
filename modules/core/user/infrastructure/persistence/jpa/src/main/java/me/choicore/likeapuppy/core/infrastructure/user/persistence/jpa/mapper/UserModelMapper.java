@@ -12,9 +12,9 @@ public class UserModelMapper {
                 entity.getId(),
                 ProfileModelMapper.toDomain(entity.getProfile()),
                 AuthenticationModelMapper.toDomain(entity.getAuthentication()),
-                null,
-                null,
-                null
+                GrantedAuthorityModelMapper.toDomain(entity.getGrantedAuthorities()),
+                ConsentModelMapper.toDomain(entity.getConsents()),
+                VerificationModelMapper.toDomain(entity.getVerification())
         );
     }
 }
