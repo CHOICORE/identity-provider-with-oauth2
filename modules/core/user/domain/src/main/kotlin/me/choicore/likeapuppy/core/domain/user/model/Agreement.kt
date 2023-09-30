@@ -8,7 +8,6 @@ data class Agreement(
     val content: String,
     val description: String,
     val required: Boolean,
-    val accepted: Boolean,
-    val acceptedAt: Instant,
+    val registeredAt: Instant,
     val modifiedAt: Instant,
 )
