@@ -9,10 +9,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_consent")
@@ -26,6 +28,7 @@ public class UserConsentEntity {
     @ManyToOne
     @JoinColumn(name = "agreement_id")
     private UserAgreementEntity userAgreementEntity;
-    private boolean accepted;
+    private boolean consented;
     private Instant consentedAt;
+
 }
