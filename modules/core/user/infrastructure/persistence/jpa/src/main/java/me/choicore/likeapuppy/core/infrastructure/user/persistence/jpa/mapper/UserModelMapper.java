@@ -13,7 +13,7 @@ public class UserModelMapper {
                 ProfileModelMapper.toDomain(entity.getProfile()),
                 AuthenticationModelMapper.toDomain(entity.getAuthentication()),
                 GrantedAuthorityModelMapper.toDomain(entity.getGrantedAuthorities()),
-                ConsentModelMapper.toDomain(entity.getConsents()),
+                ConsentModelMapper.toDomain(entity.getAgreements()),
                 VerificationModelMapper.toDomain(entity.getVerification())
         );
     }

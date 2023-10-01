@@ -21,9 +21,9 @@ public class ConsentModelMapper {
         if (entity == null) return null;
 
         return new Consent(
-                AgreementModelMapper.toDomain(entity.getUserAgreementEntity()),
-                entity.isConsented(),
-                entity.getConsentedAt()
+                TermsAndConditionsModelMapper.toDomain(entity.getTermsAndConditions()),
+                entity.isAgreed(),
+                entity.getAgreedAt()
         );
     }
 }
