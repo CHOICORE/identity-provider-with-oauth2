@@ -15,12 +15,12 @@ import java.time.Instant;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "user_agreement")
-public class UserAgreementEntity {
+@Table(name = "terms_and_conditions")
+public class TermsAndConditionsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "agreement_id")
+    @Column(name = "terms_and_conditions_id")
     private Long id;
     private String subject;
     private String content;

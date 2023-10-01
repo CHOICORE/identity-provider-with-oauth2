@@ -43,23 +43,23 @@ public class UserEntity {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private List<UserConsentEntity> consents = new ArrayList<>();
+    private List<UserConsentEntity> agreements = new ArrayList<>();
 
     @Embedded
     private VerificationEntity verification;
 
     @Builder
     private UserEntity(
-            AuthenticationEntity authentication,
-            UserProfileEntity profile,
-            List<UserGrantedAuthorityEntity> grantedAuthorities,
-            List<UserConsentEntity> consents,
-            VerificationEntity verification
+            final AuthenticationEntity authentication,
+            final UserProfileEntity profile,
+            final List<UserGrantedAuthorityEntity> grantedAuthorities,
+            final List<UserConsentEntity> agreements,
+            final VerificationEntity verification
     ) {
         this.authentication = authentication;
         this.profile = profile;
         this.grantedAuthorities = grantedAuthorities;
-        this.consents = consents;
+        this.agreements = agreements;
         this.verification = verification;
     }
 }

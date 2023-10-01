@@ -2,6 +2,7 @@ package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,10 +26,10 @@ public class UserConsentEntity {
     @Column(name = "user_consent_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "agreement_id")
-    private UserAgreementEntity userAgreementEntity;
-    private boolean consented;
-    private Instant consentedAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "terms_and_conditions_id")
+    private TermsAndConditionsEntity termsAndConditions;
+    private boolean agreed;
+    private Instant agreedAt;
 
 }
