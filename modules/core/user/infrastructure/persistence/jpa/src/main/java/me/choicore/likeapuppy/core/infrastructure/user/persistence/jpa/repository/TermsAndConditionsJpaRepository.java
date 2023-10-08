@@ -12,7 +12,7 @@ public interface TermsAndConditionsJpaRepository extends JpaRepository<TermsAndC
 
     List<TermsAndConditionsEntity> findByUsedIsTrue();
 
-    List<TermsAndConditionsEntity> findByRequiredIsTrue();
+    List<TermsAndConditionsEntity> findByMandatoryIsTrue();
 
     List<TermsAndConditionsEntity> findByIdIn(List<Long> ids);
 }
