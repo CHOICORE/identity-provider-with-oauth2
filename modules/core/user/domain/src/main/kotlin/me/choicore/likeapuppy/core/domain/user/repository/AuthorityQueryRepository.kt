@@ -9,8 +9,6 @@ interface AuthorityQueryRepository {
 
     fun findByNames(name: List<AuthorityNames>): List<Authority>
 
-    fun findByNames(name: List<String>): List<Authority>
-
     fun findById(id: Long): Authority
 
     fun findAll(): List<Authority>

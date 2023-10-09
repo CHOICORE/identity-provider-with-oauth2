@@ -7,28 +7,45 @@ import me.choicore.likeapuppy.core.domain.user.repository.AuthorityQueryReposito
 class AuthorityQueryProcessor(
     private val authorityRepository: AuthorityQueryRepository,
 ) {
-    fun getAuthority(id: Long): Authority {
+    fun getAuthorityById(id: Long): Authority {
         return authorityRepository.findById(id)
     }
 
-    fun getAuthorities(authorityNames: List<AuthorityNames>): List<Authority> {
-        val authorities: List<Authority> = authorityRepository.findByNames(authorityNames)
-        validate(authorities.size, authorityNames.size, "Invalid authorities: $authorityNames")
-        return authorities
+    fun getAuthorityByAuthorityNames(authorityNames: List<AuthorityNames>): List<Authority> {
+        return findAuthoritiesAndValidate(
+            authorityRepository::findByNames,
+            authorityNames,
+            "Invalid authorities: $authorityNames",
+        )
     }
 
-    fun getAuthorities(authorityIds: List<Long>): List<Authority> {
-        val authorities: List<Authority> = authorityRepository.findByIds(authorityIds)
-        validate(authorities.size, authorityIds.size, "Invalid authorities: $authorityIds")
-        return authorities
+    fun getAuthorityByIds(authorityIds: List<Long>): List<Authority> {
+        return findAuthoritiesAndValidate(
+            function = authorityRepository::findByIds,
+            parameter = authorityIds,
+            errorMessage = "Invalid authorities: $authorityIds",
+        )
     }
 
     fun validateAuthorityIds(authorityIds: List<Long>) {
-        val authorities: List<Authority> = authorityRepository.findByIds(authorityIds)
-        validate(authorities.size, authorityIds.size, "Invalid authorities: $authorityIds")
+        findAuthoritiesAndValidate(
+            authorityRepository::findByIds,
+            authorityIds,
+            errorMessage = "Invalid authorities: $authorityIds",
+        )
     }
 
-    private fun validate(actualSize: Int, expectedSize: Int, errorMessage: String) {
+    private inline fun <T> findAuthoritiesAndValidate(
+        function: (List<T>) -> List<Authority>,
+        parameter: List<T>,
+        errorMessage: String,
+    ): List<Authority> {
+        val authorities = function(parameter)
+        validateSizeMatch(authorities.size, parameter.size, errorMessage)
+        return authorities
+    }
+
+    private fun validateSizeMatch(actualSize: Int, expectedSize: Int, errorMessage: String) {
         if (actualSize != expectedSize) {
             throw IllegalArgumentException(errorMessage)
         }

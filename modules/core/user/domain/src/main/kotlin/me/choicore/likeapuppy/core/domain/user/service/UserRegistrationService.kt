@@ -102,7 +102,7 @@ class UserRegistrationService(
      * @return A list of IDs corresponding to the provided authority names.
      */
     private fun getAuthorityIds(authorityNames: List<AuthorityNames>): List<Long> =
-        authorityQueryProcessor.getAuthorities(authorityNames).map { it.id }
+        authorityQueryProcessor.getAuthorityByAuthorityNames(authorityNames).map { it.id }
 }
 
 private fun RegisterUserCommand.WithAuthorityNames.toWithAuthorityIds(
