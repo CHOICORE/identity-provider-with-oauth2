@@ -11,12 +11,6 @@ spring:
       hibernate:
         format_sql: true
 
-  datasource:
-    url: jdbc:h2:mem:local;MODE=MySQL;DB_CLOSE_DELAY=-1
-    username: local
-    password:
-    driverClassName: org.h2.Driver
-
 logging:
   level:
     org:
@@ -25,4 +19,6 @@ logging:
           jdbc:
             bind: trace
             extract: trace
-    org.springframework.transaction.interceptor: trace
+      springframework:
+        transaction:
+          interceptor: trace

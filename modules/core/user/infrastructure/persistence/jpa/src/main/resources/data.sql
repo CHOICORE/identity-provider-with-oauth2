@@ -57,6 +57,7 @@ VALUES ( '개인정보 수집 및 이용 필수 동의'
 
 INSERT INTO AUTHORITY( NAME
                      , SCOPE
-                     , DESCRIPTION)
-VALUES ('USER', 'ACCOUNT', '사용자 권한'),
-       ('ADMIN', 'ACCOUNT', '관리자 권한');
+                     , DESCRIPTION
+                     , REGISTERED_AT)
+VALUES ('USER', 'ACCOUNT', '사용자 권한', now()),
+       ('ADMIN', 'ACCOUNT', '관리자 권한', now());

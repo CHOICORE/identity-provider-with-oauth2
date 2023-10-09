@@ -1,8 +1,8 @@
 spring:
   config:
     import:
-      - user-jpa-local.yml
-      - optional:user-jpa-test.yml
+      - persistence-jpa-local.yml
+
   profiles:
     default: local
 
@@ -16,9 +16,17 @@ spring:
     database: h2
     hibernate:
       ddl-auto: none
+
     properties:
       hibernate:
         format_sql: false
         auto_quote_keyword: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+
     defer-datasource-initialization: true
+
+  datasource:
+    url: jdbc:h2:mem:local;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: local
+    password:
+    driverClassName: org.h2.Driver
