@@ -8,6 +8,8 @@ plugins {
 
 dependencies {
 
+    implementation("org.springframework.boot:spring-boot-starter")
+
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
