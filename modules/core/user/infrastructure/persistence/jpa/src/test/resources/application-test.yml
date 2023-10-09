@@ -1,0 +1,29 @@
+spring:
+  config:
+    import:
+      - persistence-jpa-test.yml
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    open-in-view: false
+    show-sql: false
+    database: h2
+    hibernate:
+      ddl-auto: none
+
+    properties:
+      hibernate:
+        format_sql: false
+        auto_quote_keyword: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+    defer-datasource-initialization: true
+
+  datasource:
+    url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: test
+    password:
+    driverClassName: org.h2.Driver
