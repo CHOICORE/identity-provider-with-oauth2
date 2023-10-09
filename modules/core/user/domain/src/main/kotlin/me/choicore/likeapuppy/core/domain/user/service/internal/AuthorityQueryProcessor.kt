@@ -12,42 +12,55 @@ class AuthorityQueryProcessor(
     }
 
     fun getAuthorityByAuthorityNames(authorityNames: List<AuthorityNames>): List<Authority> {
-        return findAuthoritiesAndValidate(
-            authorityRepository::findByNames,
-            authorityNames,
-            "Invalid authorities: $authorityNames",
+        return fetch(
+            function = authorityRepository::findByNames,
+            parameter = authorityNames,
         )
     }
 
     fun getAuthorityByIds(authorityIds: List<Long>): List<Authority> {
-        return findAuthoritiesAndValidate(
+        return fetch(
             function = authorityRepository::findByIds,
             parameter = authorityIds,
-            errorMessage = "Invalid authorities: $authorityIds",
         )
     }
 
     fun validateAuthorityIds(authorityIds: List<Long>) {
-        findAuthoritiesAndValidate(
-            authorityRepository::findByIds,
-            authorityIds,
-            errorMessage = "Invalid authorities: $authorityIds",
+        fetch(
+            function = authorityRepository::findByIds,
+            parameter = authorityIds,
         )
     }
 
-    private inline fun <T> findAuthoritiesAndValidate(
+    private inline fun <T> fetch(
         function: (List<T>) -> List<Authority>,
         parameter: List<T>,
-        errorMessage: String,
     ): List<Authority> {
-        val authorities = function(parameter)
-        validateSizeMatch(authorities.size, parameter.size, errorMessage)
+        val authorities: List<Authority> = function(parameter)
+
+        validate(authorities, parameter)
+
         return authorities
     }
 
-    private fun validateSizeMatch(actualSize: Int, expectedSize: Int, errorMessage: String) {
-        if (actualSize != expectedSize) {
-            throw IllegalArgumentException(errorMessage)
+    private fun <T> validate(
+        authorities: List<Authority>,
+        parameter: List<T>,
+    ) {
+        if (authorities.size != parameter.size) {
+            throw IllegalArgumentException(getErrorMessage(parameter, authorities))
         }
+    }
+
+    private fun <T> getErrorMessage(
+        parameter: List<T>,
+        authorities: List<Authority>,
+    ): String {
+        val parameterType: String = when (parameter.firstOrNull()) {
+            is Long -> "Authority IDs"
+            is AuthorityNames -> "Authority names"
+            else -> "Parameters"
+        }
+        return "Invalid $parameterType provided: $parameter. Expected ${parameter.size} authorities but found ${authorities.size}."
     }
 }
