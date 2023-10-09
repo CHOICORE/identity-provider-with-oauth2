@@ -34,6 +34,8 @@ data class DateOfBirth(
         }
     }
 
+    fun toLocalDate(): LocalDate = LocalDate.of(this.year, this.month, this.dayOfMonth)
+
     companion object {
         @JvmStatic
         fun of(dateOfBirth: LocalDate): DateOfBirth {

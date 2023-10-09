@@ -1,10 +1,10 @@
 package me.choicore.likeapuppy.core.domain.user.model
 
-import me.choicore.likeapuppy.core.domain.user.model.constant.Authority
+import me.choicore.likeapuppy.core.domain.user.model.constant.AuthorityNames
 import java.time.Instant
 
 data class GrantedAuthority(
-    val authority: Authority,
+    val authority: AuthorityNames,
     val scope: String,
     val grantedAt: Instant,
 )

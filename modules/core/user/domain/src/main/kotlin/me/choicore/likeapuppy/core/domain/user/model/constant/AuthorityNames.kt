@@ -1,6 +1,6 @@
 package me.choicore.likeapuppy.core.domain.user.model.constant
 
-enum class Authority {
+enum class AuthorityNames {
     USER,
     ADMIN,
     SYSTEM,

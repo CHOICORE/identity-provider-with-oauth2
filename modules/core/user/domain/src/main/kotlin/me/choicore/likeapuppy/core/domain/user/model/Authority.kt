@@ -1,13 +1,12 @@
 package me.choicore.likeapuppy.core.domain.user.model
 
+import me.choicore.likeapuppy.core.domain.user.model.constant.AuthorityNames
 import java.time.Instant
 
-data class Agreement(
+data class Authority(
     val id: Long,
-    val subject: String,
-    val content: String,
+    val name: AuthorityNames,
+    val scope: String,
     val description: String,
-    val required: Boolean,
     val registeredAt: Instant,
-    val modifiedAt: Instant,
 )
