@@ -5,7 +5,6 @@ import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.Us
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ConsentModelMapper {
 
@@ -14,16 +13,17 @@ public class ConsentModelMapper {
 
         return entities.stream()
                 .map(ConsentModelMapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static Consent toDomain(UserConsentEntity entity) {
         if (entity == null) return null;
 
         return new Consent(
-                TermsAndConditionsModelMapper.toDomain(entity.getTermsAndConditions()),
-                entity.isAgreed(),
-                entity.getAgreedAt()
+                // TermsAndConditionsModelMapper.toDomain(entity.getTermsAndConditionsId()),
+                null,
+                entity.isConsented(),
+                entity.getConsentedAt()
         );
     }
 }

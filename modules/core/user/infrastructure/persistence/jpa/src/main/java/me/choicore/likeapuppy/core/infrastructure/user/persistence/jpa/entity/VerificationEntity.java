@@ -20,4 +20,8 @@ public class VerificationEntity {
     private boolean phoneNumberVerified;
 
     private Instant phoneNumberVerifiedAt;
+
+    public static VerificationEntity Unverified() {
+        return new VerificationEntity();
+    }
 }

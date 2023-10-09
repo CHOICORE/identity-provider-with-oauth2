@@ -45,4 +45,3 @@ public class TermsAndConditionsRepositoryImpl implements TermsAndConditionsRepos
         return TermsAndConditionsModelMapper.toDomains(entities);
     }
 }
-

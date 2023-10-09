@@ -1,6 +1,6 @@
 package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.id.UserId;
 
 import java.time.Instant;
 
@@ -28,8 +29,8 @@ public class UserGrantedAuthorityEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Embedded
+    private UserId userId;
 
     @ManyToOne
     @JoinColumn(name = "authority_id")
@@ -39,15 +40,15 @@ public class UserGrantedAuthorityEntity {
 
 
     /**
-     * @param id        PK
-     * @param userId    FK
+     * @param id              PK
+     * @param userId          FK
      * @param authorityEntity Authority
-     * @param grantedAt Granted At
+     * @param grantedAt       Granted At
      */
     @Builder
     public UserGrantedAuthorityEntity(
             final Long id,
-            final Long userId,
+            final UserId userId,
             final AuthorityEntity authorityEntity,
             final Instant grantedAt
     ) {

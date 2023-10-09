@@ -10,15 +10,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.Instant;
 
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_consent")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class UserConsentEntity {
 
     @Id
@@ -29,7 +32,27 @@ public class UserConsentEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "terms_and_conditions_id")
     private TermsAndConditionsEntity termsAndConditions;
-    private boolean agreed;
-    private Instant agreedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    private boolean consented;
+
+    private Instant consentedAt;
+
+    @Builder
+    public UserConsentEntity(
+            final Long id,
+            final TermsAndConditionsEntity termsAndConditions,
+            final UserEntity user,
+            final boolean consented,
+            final Instant consentedAt
+    ) {
+        this.id = id;
+        this.termsAndConditions = termsAndConditions;
+        this.user = user;
+        this.consented = consented;
+        this.consentedAt = consentedAt;
+    }
 }

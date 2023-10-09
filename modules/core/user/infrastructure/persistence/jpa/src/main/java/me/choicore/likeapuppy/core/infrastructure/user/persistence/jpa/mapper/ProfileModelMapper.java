@@ -6,7 +6,7 @@ import me.choicore.likeapuppy.core.domain.user.model.Username;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserProfileEntity;
 
 public class ProfileModelMapper {
-    public static Profile toDomain(UserProfileEntity entity) {
+    public static Profile toDomain(final UserProfileEntity entity) {
         if (entity == null) return null;
 
         return new Profile(

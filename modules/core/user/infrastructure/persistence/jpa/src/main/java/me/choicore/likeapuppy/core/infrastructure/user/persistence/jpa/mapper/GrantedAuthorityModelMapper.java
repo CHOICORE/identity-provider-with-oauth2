@@ -1,7 +1,7 @@
 package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.mapper;
 
 import me.choicore.likeapuppy.core.domain.user.model.GrantedAuthority;
-import me.choicore.likeapuppy.core.domain.user.model.constant.Authority;
+import me.choicore.likeapuppy.core.domain.user.model.constant.AuthorityNames;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserGrantedAuthorityEntity;
 
 import java.util.Collections;
@@ -22,7 +22,7 @@ public class GrantedAuthorityModelMapper {
         if (entity == null) return null;
 
         return new GrantedAuthority(
-                Authority.valueOf(entity.getAuthorityEntity().getName()),
+                AuthorityNames.valueOf(entity.getAuthorityEntity().getName()),
                 entity.getAuthorityEntity().getScope(),
                 entity.getGrantedAt()
         );

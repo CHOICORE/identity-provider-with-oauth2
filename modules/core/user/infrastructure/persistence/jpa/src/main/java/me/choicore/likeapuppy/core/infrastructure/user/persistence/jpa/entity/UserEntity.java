@@ -1,6 +1,7 @@
 package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -34,16 +35,15 @@ public class UserEntity {
     @Embedded
     private AuthenticationEntity authentication;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserProfileEntity profile;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<UserGrantedAuthorityEntity> grantedAuthorities = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<UserConsentEntity> agreements = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<UserConsentEntity> consents = new ArrayList<>();
 
     @Embedded
     private VerificationEntity verification;
@@ -53,13 +53,13 @@ public class UserEntity {
             final AuthenticationEntity authentication,
             final UserProfileEntity profile,
             final List<UserGrantedAuthorityEntity> grantedAuthorities,
-            final List<UserConsentEntity> agreements,
+            final List<UserConsentEntity> consents,
             final VerificationEntity verification
     ) {
         this.authentication = authentication;
         this.profile = profile;
         this.grantedAuthorities = grantedAuthorities;
-        this.agreements = agreements;
+        this.consents = consents;
         this.verification = verification;
     }
 }
