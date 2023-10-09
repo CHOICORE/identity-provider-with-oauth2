@@ -8,9 +8,10 @@ bootJar {
 }
 
 dependencies {
-    api 'org.springframework.boot:spring-boot-starter-data-jpa'
-
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation(project(":core:user:domain"))
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'com.h2database:h2'
 }
+ 
