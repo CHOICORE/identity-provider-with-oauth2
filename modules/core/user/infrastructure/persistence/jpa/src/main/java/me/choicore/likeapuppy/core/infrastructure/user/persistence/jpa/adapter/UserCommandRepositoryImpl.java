@@ -7,6 +7,7 @@ import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.Au
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.CredentialsEntity;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserConsentEntity;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserEntity;
+import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserGrantedAuthorityEntity;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserIdentifierEntity;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserProfileEntity;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.VerificationEntity;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 @Repository
@@ -39,7 +41,7 @@ public class UserCommandRepositoryImpl implements UserCommandRepository {
     @Override
     @Transactional
     public long register(
-            @NotNull RegisterUserCommand.WithAuthorityIds command
+            @NotNull RegisterUserCommand.ContainsAuthorityIds command
     ) {
         Objects.requireNonNull(command, "command must not be null");
 
@@ -49,7 +51,6 @@ public class UserCommandRepositoryImpl implements UserCommandRepository {
                 .identifier(new UserIdentifierEntity(command.getEmail(), command.getPhoneNumber()))
                 .credentials(new CredentialsEntity(command.getPassword()))
                 .lastLoggedInAt(null)
-                .registeredAt(now)
                 .build();
 
         UserEntity user = UserEntity.builder()
@@ -59,8 +60,10 @@ public class UserCommandRepositoryImpl implements UserCommandRepository {
 
         userJpaRepository.save(user);
 
+        UserId userId = UserId.of(user.getId());
+
         UserProfileEntity profile = UserProfileEntity.builder()
-                .userId(UserId.of(user.getId()))
+                .userId(userId)
                 .firstName(command.getUsername().getFirstName())
                 .lastName(command.getUsername().getLastName())
                 .dateOfBirth(command.getDateOfBirth().toLocalDate())
@@ -69,18 +72,36 @@ public class UserCommandRepositoryImpl implements UserCommandRepository {
 
         userProfileJpaRepository.save(profile);
 
-        command.getTermsAndConditionsIds().forEach(
-                termsAndConditionsId -> {
-                    UserConsentEntity consents = UserConsentEntity.builder()
-                            .user(user)
-                            .termsAndConditions(termsAndConditionsJpaRepository.getReferenceById(termsAndConditionsId))
-                            .consented(true)
-                            .consentedAt(now)
+        saveUserGrantedAuthorities(command.getAuthorityIds(), userId, now);
+        saveUserConsentedTermsAndConditions(command.getTermsAndConditionsIds(), userId, now);
+        return userId.getValue();
+    }
+
+    private void saveUserGrantedAuthorities(List<Long> authorityIds, UserId userId, Instant grantedAt) {
+        authorityIds.forEach(
+                authorityId -> {
+                    var userGrantedAuthority = UserGrantedAuthorityEntity.builder()
+                            .userId(userId)
+                            .authority(authorityJpaRepository.getReferenceById(authorityId))
+                            .grantedAt(grantedAt)
                             .build();
-                    userConsentJpaRepository.save(consents);
+                    userGrantedAuthorityJpaRepository.save(userGrantedAuthority);
                 }
         );
+    }
 
-        return user.getId();
+    private void saveUserConsentedTermsAndConditions(List<Long> termsAndConditionsIds, UserId userId, Instant consentedAt) {
+        termsAndConditionsIds.forEach(
+                termsAndConditionsId -> {
+                    var userConsent = UserConsentEntity.builder()
+                            .user(userJpaRepository.getReferenceById(userId.getValue()))
+                            .termsAndConditions(termsAndConditionsJpaRepository.getReferenceById(termsAndConditionsId))
+                            .consented(true)
+                            .build();
+
+
+                    userConsentJpaRepository.save(userConsent);
+                }
+        );
     }
 }
