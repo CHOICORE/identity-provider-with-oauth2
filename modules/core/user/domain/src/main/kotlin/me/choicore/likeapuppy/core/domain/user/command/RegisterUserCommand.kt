@@ -15,7 +15,7 @@ sealed interface RegisterUserCommand : Validator {
     val phoneNumber: String?
     val termsAndConditionsIds: List<Long>
 
-    data class WithAuthorityNames(
+    data class ContainsAuthorityNames(
         override val email: String,
         override val password: String,
         override val username: Username,
@@ -23,15 +23,15 @@ sealed interface RegisterUserCommand : Validator {
         override val gender: Gender,
         override val phoneNumber: String? = null,
         override val termsAndConditionsIds: List<Long>,
-        val authorities: List<AuthorityNames>,
+        val authorityNames: List<AuthorityNames>,
     ) : RegisterUserCommand, Validator {
 
         override fun validate() {
-            check(this.authorities.isNotEmpty()) { "required" }
+            check(this.authorityNames.isNotEmpty()) { "required" }
         }
     }
 
-    data class WithAuthorityIds(
+    data class ContainsAuthorityIds(
         override val email: String,
         override val password: String,
         override val username: Username,
@@ -53,8 +53,8 @@ sealed interface RegisterUserCommand : Validator {
         this.username.validate()
         this.dateOfBirth.validate()
         when (this) {
-            is WithAuthorityNames -> this.validate()
-            is WithAuthorityIds -> this.validate()
+            is ContainsAuthorityNames -> this.validate()
+            is ContainsAuthorityIds -> this.validate()
         }
     }
 }
