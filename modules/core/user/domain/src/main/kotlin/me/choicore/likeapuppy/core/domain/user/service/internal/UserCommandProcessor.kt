@@ -7,7 +7,7 @@ class UserCommandProcessor(
     private val userRepository: UserCommandRepository,
 ) {
     fun register(
-        command: RegisterUserCommand.WithAuthorityIds,
+        command: RegisterUserCommand.ContainsAuthorityIds,
     ): Long {
         return userRepository.register(command = command)
     }
