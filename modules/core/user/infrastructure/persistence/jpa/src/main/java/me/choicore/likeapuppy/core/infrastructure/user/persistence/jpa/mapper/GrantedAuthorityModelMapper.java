@@ -22,10 +22,9 @@ public class GrantedAuthorityModelMapper {
         if (entity == null) return null;
 
         return new GrantedAuthority(
-                AuthorityNames.valueOf(entity.getAuthorityEntity().getName()),
-                entity.getAuthorityEntity().getScope(),
+                AuthorityNames.valueOf(entity.getAuthority().getName()),
+                entity.getAuthority().getScope(),
                 entity.getGrantedAt()
         );
     }
-
 }

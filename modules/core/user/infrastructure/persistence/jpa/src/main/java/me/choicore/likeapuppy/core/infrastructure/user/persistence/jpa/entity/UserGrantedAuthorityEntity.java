@@ -34,7 +34,7 @@ public class UserGrantedAuthorityEntity {
 
     @ManyToOne
     @JoinColumn(name = "authority_id")
-    private AuthorityEntity authorityEntity;
+    private AuthorityEntity authority;
 
     private Instant grantedAt;
 
@@ -42,19 +42,19 @@ public class UserGrantedAuthorityEntity {
     /**
      * @param id              PK
      * @param userId          FK
-     * @param authorityEntity Authority
+     * @param authority Authority
      * @param grantedAt       Granted At
      */
     @Builder
     public UserGrantedAuthorityEntity(
             final Long id,
             final UserId userId,
-            final AuthorityEntity authorityEntity,
+            final AuthorityEntity authority,
             final Instant grantedAt
     ) {
         this.id = id;
         this.userId = userId;
-        this.authorityEntity = authorityEntity;
+        this.authority = authority;
         this.grantedAt = grantedAt;
     }
 }

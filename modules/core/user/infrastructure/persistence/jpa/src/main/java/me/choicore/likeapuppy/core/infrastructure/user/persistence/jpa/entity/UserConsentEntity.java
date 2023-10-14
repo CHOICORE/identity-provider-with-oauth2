@@ -13,15 +13,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "user_consent")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class UserConsentEntity {
 
     @Id
@@ -39,6 +38,7 @@ public class UserConsentEntity {
 
     private boolean consented;
 
+    @CreatedDate
     private Instant consentedAt;
 
     @Builder

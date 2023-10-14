@@ -12,10 +12,10 @@ import java.time.Instant;
 
 
 @Getter
-@Embeddable
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
+@Embeddable
 public class AuthenticationEntity {
 
     @Embedded

@@ -19,7 +19,8 @@ public class UserId {
         this.value = value;
     }
 
-    public static UserId of(final long id) {
+    public static UserId of(final Long id) {
+        if (id == null) throw new IllegalArgumentException("id must not be null");
         return new UserId(id);
     }
 }
