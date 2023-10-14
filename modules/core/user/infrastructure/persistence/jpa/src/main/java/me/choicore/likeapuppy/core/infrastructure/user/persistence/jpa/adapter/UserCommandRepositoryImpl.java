@@ -1,7 +1,9 @@
 package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.adapter;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.choicore.likeapuppy.core.domain.user.command.RegisterUserCommand;
+import me.choicore.likeapuppy.core.domain.user.model.User;
 import me.choicore.likeapuppy.core.domain.user.repository.UserCommandRepository;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.AuthenticationEntity;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.CredentialsEntity;
@@ -25,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class UserCommandRepositoryImpl implements UserCommandRepository {
@@ -43,10 +45,9 @@ public class UserCommandRepositoryImpl implements UserCommandRepository {
     public long register(
             @NotNull RegisterUserCommand.ContainsAuthorityIds command
     ) {
-        Objects.requireNonNull(command, "command must not be null");
+        log.info("UserCommandRepositoryImpl.register command: {}", command);
 
         Instant now = Instant.now();
-
         AuthenticationEntity authentication = AuthenticationEntity.builder()
                 .identifier(new UserIdentifierEntity(command.getEmail(), command.getPhoneNumber()))
                 .credentials(new CredentialsEntity(command.getPassword()))
@@ -98,10 +99,24 @@ public class UserCommandRepositoryImpl implements UserCommandRepository {
                             .termsAndConditions(termsAndConditionsJpaRepository.getReferenceById(termsAndConditionsId))
                             .consented(true)
                             .build();
-
-
                     userConsentJpaRepository.save(userConsent);
                 }
         );
     }
+
+    @Override
+    @Transactional
+    public void modify(@NotNull User user) {
+        log.info("UserCommandRepositoryImpl.modify user: {}", user);
+        long id = user.getId();
+        // TODO: implement this modify method
+        UserEntity found = userJpaRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    @Override
+    public void deleteById(long id) {
+        log.info("UserCommandRepositoryImpl.deleteById id: {}", id);
+        // TODO: implement this cascade delete method,
+    }
 }
+
