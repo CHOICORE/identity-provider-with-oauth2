@@ -15,7 +15,7 @@ import me.choicore.likeapuppy.core.domain.user.service.internal.UserQueryProcess
  * @property termsAndConditionsProcessor 이용 약관을 검증하는 서비스입니다.
  * @property authorityQueryProcessor 권한 관련 쿼리를 처리하는 서비스입니다.
  */
-class UserRegistrationService(
+class UserRegistrationProcessor(
     private val userCommandProcessor: UserCommandProcessor,
     private val userQueryProcessor: UserQueryProcessor,
     private val termsAndConditionsProcessor: TermsAndConditionsProcessor,
@@ -38,20 +38,20 @@ class UserRegistrationService(
     }
 
     /**
-     * 받은 명령 객체의 유형에 따라 등록 과정을 위임합니다.
+     * 받은 명령 객체의 유형에 따라 등록 과정을 위임하는 delegate method 입니다.
      *
-     * 이 함수는 [RegisterUserCommand] 객체의 유형을 확인하고 [RegisterUserCommand.ContainsAuthorityNames] 인스턴스인지
-     * [RegisterUserCommand.ContainsAuthorityIds] 인스턴스인지에 따라 적절한 등록 메서드를 호출합니다.
-     *
+     * 이 함수는 [RegisterUserCommand] 객체의 유형을 확인하고 적절한 등록 메서드를 호출합니다.
+
      * @param command 등록에 필요한 모든 데이터를 포함하는 객체. 두 가지 유형 중 하나일 수 있습니다:
-     * [RegisterUserCommand.ContainsAuthorityNames] 또는 [RegisterUserCommand.ContainsAuthorityIds].
+     * - [RegisterUserCommand.ContainsAuthorityNames]
+     * - [RegisterUserCommand.ContainsAuthorityIds].
      *
      * @return 신규 사용자의 ID를 반환합니다.
      */
     private fun delegateRegistration(command: RegisterUserCommand): Long {
         return when (command) {
-            is RegisterUserCommand.ContainsAuthorityNames -> registerContainsAuthorityNamesToIds(command)
-            is RegisterUserCommand.ContainsAuthorityIds -> registerContainsAuthorityIds(command)
+            is RegisterUserCommand.ContainsAuthorityNames -> registerContainsAuthorityNamesToIds(command = command)
+            is RegisterUserCommand.ContainsAuthorityIds -> registerContainsAuthorityIds(command = command)
         }
     }
 
