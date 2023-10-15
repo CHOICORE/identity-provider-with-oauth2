@@ -60,7 +60,7 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
     }
 
     private void validateHasText(@NotNull String identifier) {
-        if (StringUtils.hasText(identifier)) throw new IllegalArgumentException("identifier must not be empty");
+        if (!StringUtils.hasText(identifier)) throw new IllegalArgumentException("identifier must not be empty");
     }
 }
 
