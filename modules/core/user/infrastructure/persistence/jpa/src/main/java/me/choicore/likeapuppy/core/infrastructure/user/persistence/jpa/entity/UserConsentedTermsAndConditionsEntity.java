@@ -20,8 +20,8 @@ import java.time.Instant;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "user_consent")
-public class UserConsentEntity {
+@Table(name = "user_consented_terms_and_conditions")
+public class UserConsentedTermsAndConditionsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class UserConsentEntity {
     private Instant consentedAt;
 
     @Builder
-    public UserConsentEntity(
+    public UserConsentedTermsAndConditionsEntity(
             final Long id,
             final TermsAndConditionsEntity termsAndConditions,
             final UserEntity user,
