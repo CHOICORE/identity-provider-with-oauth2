@@ -13,17 +13,9 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
 
     @Query("SELECT u " +
             "FROM UserEntity u " +
-            "WHERE u.authentication.identifier.email = :identifier " +
-            "OR u.authentication.identifier.phoneNumber = :identifier")
+            "WHERE u.email = :username " +
+            "OR u.phoneNumber = :username")
     Optional<UserEntity> findByIdentifier(@Param("identifier") String identifier);
 
-    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END " +
-            "FROM UserEntity u " +
-            "WHERE u.authentication.identifier.email = :email")
-    boolean existsByEmail(@Param("email") String email);
 
-    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END " +
-            "FROM UserEntity u " +
-            "WHERE u.authentication.identifier.phoneNumber = :phoneNumber")
-    boolean existsByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 }
