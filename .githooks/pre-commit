@@ -1,6 +1,6 @@
 #!/bin/sh
 
-readonly KTLINT_REQUIRED_VERSION=1.0.0
+readonly KTLINT_REQUIRED_VERSION=1.0.1
 readonly KTLINT_INSTALL_GUIDE_LINK=https://pinterest.github.io/ktlint/$KTLINT_REQUIRED_VERSION/install/cli/#package-managers
 
 # Function to print error message and exit
