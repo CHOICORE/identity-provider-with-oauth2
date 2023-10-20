@@ -21,14 +21,11 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @EnableWebSecurity(debug = true)
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class DefaultSecurityConfigurer {
-
     @Bean
     @Order(2)
-    fun defaultSecurityFilterChain(
-        httpSecurity: HttpSecurity,
-    ): SecurityFilterChain {
+    fun defaultSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
         httpSecurity {
             formLogin {
                 loginPage = "/login"
@@ -49,23 +46,22 @@ class DefaultSecurityConfigurer {
     }
 
     @Bean
-    fun webSecurityCustomizer(): WebSecurityCustomizer = WebSecurityCustomizer { webSecurity: WebSecurity ->
-        webSecurity.ignoring().requestMatchers(
-            AntPathRequestMatcher("/assets/**"),
-            AntPathRequestMatcher("/error/**"),
-            AntPathRequestMatcher("/login-error"),
-            toStaticResources().atCommonLocations(),
-            toH2Console(),
-        )
-    }
+    fun webSecurityCustomizer(): WebSecurityCustomizer =
+        WebSecurityCustomizer { webSecurity: WebSecurity ->
+            webSecurity.ignoring().requestMatchers(
+                AntPathRequestMatcher("/assets/**"),
+                AntPathRequestMatcher("/error/**"),
+                AntPathRequestMatcher("/login-error"),
+                toStaticResources().atCommonLocations(),
+                toH2Console(),
+            )
+        }
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun authenticationEventPublisher(
-        applicationEventPublisher: ApplicationEventPublisher?,
-    ): AuthenticationEventPublisher {
+    fun authenticationEventPublisher(applicationEventPublisher: ApplicationEventPublisher): AuthenticationEventPublisher {
         return DefaultAuthenticationEventPublisher(applicationEventPublisher)
     }
 }

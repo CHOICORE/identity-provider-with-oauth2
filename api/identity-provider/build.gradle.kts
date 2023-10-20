@@ -14,7 +14,11 @@ dependencies {
     implementation("org.webjars:bootstrap:5.3.1")
     implementation("org.webjars:jquery:3.7.1")
     api(project(":oauth2-authorization"))
-    api(project(":core:user"))
+    implementation(project(":core:user:domain"))
+    implementation(project(":core:user:infrastructure:persistence:jpa"))
+
+    compileOnly("org.springframework.data:spring-data-jpa")
+    testCompileOnly("org.springframework.data:spring-data-jpa")
 
     /**
      * Test
