@@ -17,7 +17,6 @@ class ConsentController(
     private val registeredClientRepository: RegisteredClientRepository,
     private val oauth2AuthorizationConsentService: OAuth2AuthorizationConsentService,
 ) {
-
     @GetMapping("/oauth2/consent")
     fun consent(
         principal: Principal,
@@ -36,11 +35,12 @@ class ConsentController(
         val currentAuthorizationConsent =
             oauth2AuthorizationConsentService.findById(registeredClient.id, principal.name)
 
-        val authorizedScopes: Set<String> = if (currentAuthorizationConsent != null) {
-            currentAuthorizationConsent.getScopes()
-        } else {
-            emptySet()
-        }
+        val authorizedScopes: Set<String> =
+            if (currentAuthorizationConsent != null) {
+                currentAuthorizationConsent.getScopes()
+            } else {
+                emptySet()
+            }
         for (requestedScope in StringUtils.delimitedListToStringArray(scope, " ")) {
             if (OidcScopes.OPENID == requestedScope) continue
 
@@ -69,7 +69,6 @@ class ConsentController(
     }
 
     class ScopeWithDescription internal constructor(val scope: String) {
-
         companion object {
             private val scopeDescriptions: MutableMap<String, String> = HashMap()
 

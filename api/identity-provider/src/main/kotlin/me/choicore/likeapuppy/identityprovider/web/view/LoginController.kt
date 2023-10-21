@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
 class LoginController {
-
     private val logger: Logger = Slf4j
 
     @GetMapping

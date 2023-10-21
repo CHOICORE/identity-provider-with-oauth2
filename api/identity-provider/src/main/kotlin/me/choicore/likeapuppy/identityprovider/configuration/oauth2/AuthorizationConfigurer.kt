@@ -16,7 +16,6 @@ import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher
 
 @Configuration(proxyBeanMethods = false)
 class AuthorizationConfigurer {
-
     @Bean
     @Order(1)
     fun authorizationServerSecurityFilterChain(

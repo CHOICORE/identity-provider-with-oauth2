@@ -10,7 +10,6 @@ class FormLoginAuthenticationFailureHandler(
 ) : ForwardAuthenticationFailureHandler(
     defaultFailureUrl,
 ) {
-
     override fun onAuthenticationFailure(
         request: HttpServletRequest,
         response: HttpServletResponse,

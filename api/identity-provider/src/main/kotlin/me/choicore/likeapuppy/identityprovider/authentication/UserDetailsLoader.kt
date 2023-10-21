@@ -1,6 +1,7 @@
 package me.choicore.likeapuppy.identityprovider.authentication
 
 import me.choicore.likeapuppy.core.domain.user.model.GrantedAuthority
+import me.choicore.likeapuppy.core.domain.user.model.Username
 import me.choicore.likeapuppy.core.domain.user.model.aggregate.Account
 import me.choicore.likeapuppy.core.domain.user.service.internal.AccountQueryProcessor
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -26,7 +27,7 @@ class UserDetailsLoader(
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
         try {
-            val account: Account = accountQueryProcessor.findUserAccountByUsername(username)
+            val account: Account = accountQueryProcessor.findUserAccountByUsername(Username.withEmailType(username))
             return convertToUserDetails(account)
         } catch (e: IllegalStateException) {
             throw UsernameNotFoundException(e.message, e)

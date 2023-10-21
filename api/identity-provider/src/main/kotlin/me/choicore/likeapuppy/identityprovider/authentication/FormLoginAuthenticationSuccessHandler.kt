@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
 
 class FormLoginAuthenticationSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler() {
-
     override fun onAuthenticationSuccess(
         request: HttpServletRequest,
         response: HttpServletResponse,

@@ -4,7 +4,6 @@ enum class UnauthorizedErrorCode(
     val code: String,
     val type: UnauthorizedErrorType,
 ) {
-
     INTERNAL_ERROR(
         code = "0001",
         type = UnauthorizedErrorType.INTERNAL_ERROR,
@@ -57,7 +56,6 @@ enum class UnauthorizedErrorCode(
 }
 
 enum class UnauthorizedErrorType {
-
     INVALID_CREDENTIALS,
 
     LOGIN_ATTEMPTS_EXCEEDED,

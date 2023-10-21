@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 class ErrorAdvisor : ErrorController {
-
     @RequestMapping("/error")
     fun handleError(
         model: Model,

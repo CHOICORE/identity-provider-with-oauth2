@@ -18,7 +18,6 @@ import java.util.UUID
 class JwtConfigurer(
     private val rsaKeyProperties: RSAKeyProperties,
 ) {
-
     @Bean
     fun jwtDecoder(jwkSource: JWKSource<SecurityContext>): JwtDecoder {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource)
@@ -28,10 +27,11 @@ class JwtConfigurer(
     fun jwkSource(): JWKSource<SecurityContext> {
         val rsaPublicKey: RSAPublicKey = rsaKeyProperties.publicKey
         val rsaPrivateKey: RSAPrivateKey = rsaKeyProperties.privateKey
-        val rsaKey: RSAKey = RSAKey.Builder(rsaPublicKey)
-            .privateKey(rsaPrivateKey)
-            .keyID(UUID.randomUUID().toString())
-            .build()
+        val rsaKey: RSAKey =
+            RSAKey.Builder(rsaPublicKey)
+                .privateKey(rsaPrivateKey)
+                .keyID(UUID.randomUUID().toString())
+                .build()
         val jwkSet = JWKSet(rsaKey)
         return ImmutableJWKSet(jwkSet)
     }

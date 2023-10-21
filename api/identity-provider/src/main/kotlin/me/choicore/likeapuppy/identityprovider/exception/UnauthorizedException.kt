@@ -113,9 +113,10 @@ fun getUnauthorizedError(authenticationException: AuthenticationException): Unau
         is InternalAuthenticationServiceException,
         is AuthenticationServiceException,
         is ProviderNotFoundException,
-        -> UnauthorizedException.InternalError(
-            authenticationException.message ?: authenticationException.javaClass.simpleName,
-        )
+        ->
+            UnauthorizedException.InternalError(
+                authenticationException.message ?: authenticationException.javaClass.simpleName,
+            )
 
         else -> UnauthorizedException.UnknownError
     }
