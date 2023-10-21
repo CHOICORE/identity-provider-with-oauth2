@@ -13,10 +13,30 @@ dependencyResolutionManagement {
 
 private val modules: MutableList<Module> = mutableListOf()
 
-module(name = ":identity-provider", projectDir = "api/identity-provider")
-module(name = ":relying-party", projectDir = "api/relying-party")
-module(name = ":oauth2-authorization", projectDir = "modules/oauth2-authorization")
-module(name = ":core:user", projectDir = "modules/core/user")
+module(
+    name = ":identity-provider",
+    projectDir = "api/identity-provider",
+)
+
+module(
+    name = ":relying-party",
+    projectDir = "api/relying-party",
+)
+
+module(
+    name = ":oauth2-authorization",
+    projectDir = "modules/oauth2-authorization",
+)
+
+module(
+    name = ":core:user:domain",
+    projectDir = "modules/core/user/domain",
+)
+
+module(
+    name = ":core:user:infrastructure:persistence:jpa",
+    projectDir = "modules/core/user/infrastructure/persistence/jpa",
+)
 
 private data class Module(
     val name: String,

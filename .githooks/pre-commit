@@ -30,7 +30,7 @@ fi
 EDITOR_CONFIG_PATH=$(git rev-parse --show-toplevel)
 if ! git diff --name-only --cached --relative \
   | grep --color=never '\.kt[s"]\?$' \
-  | xargs ktlint --code-style=ktlint_official --editorconfig="$EDITOR_CONFIG_PATH" --relative; then
+  | xargs ktlint --editorconfig="$EDITOR_CONFIG_PATH" --relative; then
 
     error_exit "ktlint has failed.
 Please check your changes before committing and ensure they pass through ktlint."
