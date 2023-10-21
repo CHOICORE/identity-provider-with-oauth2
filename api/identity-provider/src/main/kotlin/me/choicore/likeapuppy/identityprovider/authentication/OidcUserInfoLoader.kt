@@ -4,7 +4,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo
 import org.springframework.stereotype.Service
 
 @Service
-class OidcUserInfoService {
+class OidcUserInfoLoader {
 
     fun loadUser(username: String): OidcUserInfo {
         return OidcUserInfo(loadUserAttributes(username))
