@@ -10,9 +10,21 @@ INSERT INTO `USER`( USER_ID
                   , PHONE_NUMBER_VERIFIED
                   , PHONE_NUMBER_VERIFIED_AT
                   , REGISTERED_AT)
-VALUES ( '1'
+VALUES ( '2'
+       , '2'
+       , '{noop}2'
+       , null
+       , now()
+       , 0
+       , now()
+       , true
+       , now()
+       , true
+       , now()
+       , now()),
+       ( '1'
        , '1'
-       , '1'
+       , '{noop}1'
        , '1'
        , now()
        , 0
@@ -21,7 +33,8 @@ VALUES ( '1'
        , now()
        , true
        , now()
-       , now());
+       , now())
+;
 
 
 INSERT INTO TERMS_AND_CONDITIONS( SUBJECT

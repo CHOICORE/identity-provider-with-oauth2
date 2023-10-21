@@ -5,32 +5,32 @@ import me.choicore.likeapuppy.core.domain.user.model.constant.AuthorityNames
 import me.choicore.likeapuppy.core.domain.user.repository.AuthorityQueryRepository
 
 class AuthorityQueryProcessor(
-    private val authorityRepository: AuthorityQueryRepository,
+    private val repository: AuthorityQueryRepository,
 ) {
     fun getAuthorityById(id: Long): Authority {
         return fetch(
-            execute = authorityRepository::findById,
+            execute = repository::findById,
             parameter = id,
         )
     }
 
     fun getAuthorityByIds(authorityIds: List<Long>): List<Authority> {
         return fetch(
-            execute = authorityRepository::findByIds,
+            execute = repository::findByIds,
             parameter = authorityIds,
         )
     }
 
     fun getAuthorityByAuthorityNames(authorityNames: List<AuthorityNames>): List<Authority> {
         return fetch(
-            execute = authorityRepository::findByNames,
+            execute = repository::findByNames,
             parameter = authorityNames,
         )
     }
 
     fun validateAuthorityIds(authorityIds: List<Long>) {
         fetch(
-            execute = authorityRepository::findByIds,
+            execute = repository::findByIds,
             parameter = authorityIds,
         )
     }
@@ -40,11 +40,12 @@ private fun <T> getErrorMessage(
     parameter: List<T>,
     authorities: List<Authority>,
 ): String {
-    val parameterType: String = when (parameter.firstOrNull()) {
-        is Long -> "Authority IDs"
-        is AuthorityNames -> "Authority names"
-        else -> "Parameters"
-    }
+    val parameterType: String =
+        when (parameter.firstOrNull()) {
+            is Long -> "Authority IDs"
+            is AuthorityNames -> "Authority names"
+            else -> "Parameters"
+        }
     return "Invalid $parameterType provided: $parameter. Expected ${parameter.size} authorities but found ${authorities.size}."
 }
 

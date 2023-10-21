@@ -2,19 +2,32 @@ package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.mapper;
 
 import me.choicore.likeapuppy.core.domain.user.model.GrantedAuthority;
 import me.choicore.likeapuppy.core.domain.user.model.constant.AuthorityNames;
+import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserEntity;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.UserGrantedAuthorityEntity;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GrantedAuthorityModelMapper {
+import static me.choicore.likeapuppy.core.common.ValidatorKt.validateNotNull;
 
-    public static List<GrantedAuthority> toDomain(List<UserGrantedAuthorityEntity> entities) {
+public class GrantedAuthorityMapper {
+
+    private GrantedAuthorityMapper() {
+        throw new AssertionError("The class should not be instantiated");
+    }
+
+    public static List<GrantedAuthority> toDomains(UserEntity entity) {
+        validateNotNull(entity, "UserEntity must not be null");
+        List<UserGrantedAuthorityEntity> grantedAuthorities = entity.getGrantedAuthorities();
+        return toDomains(grantedAuthorities);
+    }
+
+    public static List<GrantedAuthority> toDomains(List<UserGrantedAuthorityEntity> entities) {
         if (entities.isEmpty()) return Collections.emptyList();
 
         return entities.stream()
-                .map(GrantedAuthorityModelMapper::toDomain)
+                .map(GrantedAuthorityMapper::toDomain)
                 .collect(Collectors.toList());
     }
 

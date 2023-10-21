@@ -1,15 +1,16 @@
 package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.adapter;
 
 import lombok.RequiredArgsConstructor;
-import me.choicore.likeapuppy.core.domain.user.model.User;
+import me.choicore.likeapuppy.core.domain.user.model.Authentication;
+import me.choicore.likeapuppy.core.domain.user.model.Credentials;
+import me.choicore.likeapuppy.core.domain.user.model.aggregate.User;
 import me.choicore.likeapuppy.core.domain.user.repository.UserQueryRepository;
-import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.mapper.UserModelMapper;
+import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.mapper.AuthenticationMapper;
+import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.mapper.CredentialsMapper;
+import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.mapper.aggregate.UserMapper;
 import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.repository.UserJpaRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
-
-import java.util.function.Supplier;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,48 +20,31 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 
     @NotNull
     @Override
-    public User findByUserIdentifier(@NotNull String identifier) {
-        validateHasText(identifier);
-
-        var entity = userJpaRepository.findByIdentifier(identifier)
-                .orElseThrow(throwsIllegalStateException());
-        return UserModelMapper.toDomain(entity);
+    public User findUserById(long id) {
+        return userJpaRepository.findById(id)
+                .map(UserMapper::toDomain)
+                .orElseThrow(() -> new IllegalStateException("사용자 정보를 찾을 수 없습니다."));
     }
 
     @NotNull
     @Override
-    public User findById(long id) {
-        if (id <= 0) throw new IllegalArgumentException("id must be positive");
-
-        var entity = userJpaRepository.findById(id)
-                .orElseThrow(throwsIllegalStateException());
-        return UserModelMapper.toDomain(entity);
-    }
-
-    private Supplier<IllegalStateException> throwsIllegalStateException() {
-        return () -> new IllegalStateException("User not found");
+    public Credentials findUserCredentialsByUsername(@NotNull String username) {
+        return userJpaRepository.findByIdentifier(username)
+                .map(entity -> CredentialsMapper.toDomain(entity.getEmail(), entity.getPassword()))
+                .orElseThrow(() -> new IllegalStateException("사용자 정보를 찾을 수 없습니다."));
     }
 
     @Override
-    public boolean existsByUserIdentifier(@NotNull String identifier) {
-        validateHasText(identifier);
-
-        return userJpaRepository.findByIdentifier(identifier).isPresent();
+    public boolean existsByUsername(@NotNull String username) {
+        return userJpaRepository.existsByEmailOrPhoneNumber(username, username);
     }
 
+    @NotNull
     @Override
-    public boolean existsByEmail(@NotNull String email) {
-        return userJpaRepository.existsByEmail(email);
-
-    }
-
-    @Override
-    public boolean existsByPhoneNumber(@NotNull String phoneNumber) {
-        return userJpaRepository.existsByPhoneNumber(phoneNumber);
-    }
-
-    private void validateHasText(@NotNull String identifier) {
-        if (!StringUtils.hasText(identifier)) throw new IllegalArgumentException("identifier must not be empty");
+    public Authentication findUserAuthenticationByUsername(@NotNull String username) {
+        return userJpaRepository.findByIdentifier(username)
+                .map(AuthenticationMapper::toDomain)
+                .orElseThrow(() -> new IllegalStateException("사용자 정보를 찾을 수 없습니다."));
     }
 }
 

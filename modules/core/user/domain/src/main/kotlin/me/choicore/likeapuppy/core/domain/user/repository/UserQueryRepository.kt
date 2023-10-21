@@ -1,16 +1,15 @@
 package me.choicore.likeapuppy.core.domain.user.repository
 
-import me.choicore.likeapuppy.core.domain.user.model.User
+import me.choicore.likeapuppy.core.domain.user.model.Authentication
+import me.choicore.likeapuppy.core.domain.user.model.Credentials
+import me.choicore.likeapuppy.core.domain.user.model.aggregate.User
 
 interface UserQueryRepository {
+    fun findUserById(id: Long): User
 
-    fun findByUserIdentifier(identifier: String): User
+    fun findUserCredentialsByUsername(username: String): Credentials
 
-    fun findById(id: Long): User
+    fun findUserAuthenticationByUsername(username: String): Authentication
 
-    fun existsByUserIdentifier(identifier: String): Boolean
-
-    fun existsByEmail(email: String): Boolean
-
-    fun existsByPhoneNumber(phoneNumber: String): Boolean
+    fun existsByUsername(username: String): Boolean
 }

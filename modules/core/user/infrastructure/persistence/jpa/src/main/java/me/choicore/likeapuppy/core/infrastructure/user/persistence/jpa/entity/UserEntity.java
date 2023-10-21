@@ -14,7 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -75,24 +74,7 @@ public class UserEntity {
 
     private Instant registeredAt;
 
-    @Builder
-    private UserEntity(
-            final AuthenticationEntity authentication,
-            final List<UserGrantedAuthorityEntity> grantedAuthorities,
-            final List<UserConsentedTermsAndConditionsEntity> consentedTermsAndConditions,
-            final VerificationEntity verification
-    ) {
+    public void updateAuthentication(AuthenticationEntity authentication) {
         this.authentication = authentication;
-        this.grantedAuthorities = grantedAuthorities;
-        this.consentedTermsAndConditions = consentedTermsAndConditions;
-        this.verification = verification;
     }
-//
-//    public Profile.PersonalName getPersonalName() {
-//        return ProfileModelMapper.getPersonalName(
-//                this.firstName,
-//                this.middleName,
-//                this.lastName
-//        );
-//    }
 }

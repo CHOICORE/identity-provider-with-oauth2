@@ -6,7 +6,7 @@ import me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity.Te
 import java.util.Collections;
 import java.util.List;
 
-public class TermsAndConditionsModelMapper {
+public class TermsAndConditionsMapper {
 
     public static TermsAndConditions toDomain(TermsAndConditionsEntity entity) {
         if (entity == null) return null;
@@ -28,7 +28,7 @@ public class TermsAndConditionsModelMapper {
         if (entities == null) return Collections.emptyList();
 
         return entities.stream()
-                .map(TermsAndConditionsModelMapper::toDomain)
+                .map(TermsAndConditionsMapper::toDomain)
                 .toList();
     }
 }

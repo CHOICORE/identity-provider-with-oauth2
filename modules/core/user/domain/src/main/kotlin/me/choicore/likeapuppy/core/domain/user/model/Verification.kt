@@ -7,4 +7,22 @@ data class Verification(
     val emailVerifiedAt: Instant? = null,
     val isPhoneNumberVerified: Boolean = false,
     val phoneNumberVerifiedAt: Instant? = null,
-)
+) {
+    fun markAsEmailVerified(): Verification {
+        return this.copy(
+            isEmailVerified = true,
+            emailVerifiedAt = Instant.now(),
+        )
+    }
+
+    fun markAsPhoneNumberVerified(): Verification {
+        return this.copy(
+            isPhoneNumberVerified = true,
+            phoneNumberVerifiedAt = Instant.now(),
+        )
+    }
+
+    fun isVerified(): Boolean {
+        return isEmailVerified || isPhoneNumberVerified
+    }
+}

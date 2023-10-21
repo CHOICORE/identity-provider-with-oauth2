@@ -1,4 +1,4 @@
-package me.choicore.likeapuppy.core.domain
+package me.choicore.likeapuppy.core.common
 
 /**
  * 유효성 검사 인터페이스
@@ -15,4 +15,12 @@ interface Validator {
 
 internal inline fun <T : Validator> validate(block: () -> T) {
     block().apply { this.validate() }
+}
+
+@Throws(IllegalArgumentException::class)
+fun validateNotNull(
+    obj: Any?,
+    errorMessage: String,
+) {
+    checkNotNull(obj) { errorMessage }
 }

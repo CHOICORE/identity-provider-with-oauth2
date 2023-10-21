@@ -1,16 +1,16 @@
 package me.choicore.likeapuppy.core.domain.user.command
 
-import me.choicore.likeapuppy.core.domain.Validator
-import me.choicore.likeapuppy.core.domain.user.model.DateOfBirth
-import me.choicore.likeapuppy.core.domain.user.model.Username
+import me.choicore.likeapuppy.core.common.Validator
+import me.choicore.likeapuppy.core.domain.user.model.PersonalName
 import me.choicore.likeapuppy.core.domain.user.model.constant.AuthorityNames
 import me.choicore.likeapuppy.core.domain.user.model.constant.Gender
+import java.time.LocalDate
 
-sealed interface RegisterUserCommand : Validator {
+sealed interface UserRegisterCommand : Validator {
     val email: String
     val password: String
-    val username: Username
-    val dateOfBirth: DateOfBirth
+    val personalName: PersonalName
+    val dateOfBirth: LocalDate
     val gender: Gender
     val phoneNumber: String?
     val termsAndConditionsIds: List<Long>
@@ -18,14 +18,13 @@ sealed interface RegisterUserCommand : Validator {
     data class ContainsAuthorityNames(
         override val email: String,
         override val password: String,
-        override val username: Username,
-        override val dateOfBirth: DateOfBirth,
+        override val personalName: PersonalName,
+        override val dateOfBirth: LocalDate,
         override val gender: Gender,
         override val phoneNumber: String? = null,
         override val termsAndConditionsIds: List<Long>,
         val authorityNames: List<AuthorityNames>,
-    ) : RegisterUserCommand, Validator {
-
+    ) : UserRegisterCommand, Validator {
         override fun validate() {
             check(this.authorityNames.isNotEmpty()) { "required" }
         }
@@ -34,14 +33,13 @@ sealed interface RegisterUserCommand : Validator {
     data class ContainsAuthorityIds(
         override val email: String,
         override val password: String,
-        override val username: Username,
-        override val dateOfBirth: DateOfBirth,
+        override val personalName: PersonalName,
+        override val dateOfBirth: LocalDate,
         override val gender: Gender,
         override val phoneNumber: String? = null,
         override val termsAndConditionsIds: List<Long>,
         val authorityIds: List<Long>,
-    ) : RegisterUserCommand, Validator {
-
+    ) : UserRegisterCommand, Validator {
         override fun validate() {
             check(this.authorityIds.isNotEmpty()) { "required" }
         }
@@ -50,8 +48,7 @@ sealed interface RegisterUserCommand : Validator {
     override fun validate() {
         require(this.email.isNotBlank()) { "Email is required" }
         require(this.password.isNotBlank()) { "Password is required" }
-        this.username.validate()
-        this.dateOfBirth.validate()
+        this.personalName.validate()
         when (this) {
             is ContainsAuthorityNames -> this.validate()
             is ContainsAuthorityIds -> this.validate()

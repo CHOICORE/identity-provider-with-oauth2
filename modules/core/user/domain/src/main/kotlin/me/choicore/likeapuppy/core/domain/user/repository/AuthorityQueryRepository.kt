@@ -4,7 +4,6 @@ import me.choicore.likeapuppy.core.domain.user.model.Authority
 import me.choicore.likeapuppy.core.domain.user.model.constant.AuthorityNames
 
 interface AuthorityQueryRepository {
-
     fun findByName(name: String): Authority
 
     fun findByNames(name: List<AuthorityNames>): List<Authority>

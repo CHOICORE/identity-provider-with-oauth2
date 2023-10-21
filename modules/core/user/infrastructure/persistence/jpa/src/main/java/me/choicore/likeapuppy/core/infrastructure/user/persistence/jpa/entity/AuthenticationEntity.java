@@ -24,16 +24,4 @@ public class AuthenticationEntity {
     private Instant lastLoggedInAt;
 
     private Instant passwordExpirationAt;
-
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    public boolean isAccountNonLocked() {
-        return true;
-    }
 }
