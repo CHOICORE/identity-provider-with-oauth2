@@ -12,7 +12,6 @@
 <div sec:authorize="isAuthenticated()">
     This content is only shown to authenticated users.
 </div>
-Hello, World! <span class="fw-bold" th:text="${principalName}"></span>
-
+Hello, World! <span class="fw-bold" th:text="${oidcUser.subject}"></span>
 </body>
 </html>

@@ -17,4 +17,6 @@ spring:
             provider: like-a-puppy
             client-id: like-a-puppy
             client-secret: like-a-puppy-secret
-            scope: openid,profile,phone,email
+            client-authentication-method: client_secret_post
+            scope: openid
+            # ,profile,phone,email

@@ -9,9 +9,8 @@ import org.springframework.security.oauth2.client.web.server.DefaultServerOAuth2
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizationRequestResolver
 import org.springframework.security.web.server.SecurityWebFilterChain
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class OAuth2ClientWithPkceConfigurer {
-
     @Bean
     fun securityWebFilterChain(
         serverHttpSecurity: ServerHttpSecurity,

@@ -1,4 +1,4 @@
-package me.choicore.likeapuppy.relyingparty
+package me.choicore.likeapuppy
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
