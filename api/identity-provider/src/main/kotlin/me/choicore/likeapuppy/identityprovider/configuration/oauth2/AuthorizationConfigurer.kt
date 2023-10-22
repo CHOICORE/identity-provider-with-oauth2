@@ -26,6 +26,15 @@ class AuthorizationConfigurer {
         httpSecurity
             .getConfigurer(OAuth2AuthorizationServerConfigurer::class.java)
             .oidc(Customizer.withDefaults())
+//            .oidc { oidc ->
+//                oidc.userInfoEndpoint {
+//                    it.userInfoMapper { context ->
+//                        val authentication: OidcUserInfoAuthenticationToken = context.getAuthentication()
+//                        val principal: JwtAuthenticationToken = authentication.principal as JwtAuthenticationToken
+//                        OidcUserInfo(principal.token.claims)
+//                    }
+//                }
+//            }
         httpSecurity {
             oauth2ResourceServer {
                 jwt { }

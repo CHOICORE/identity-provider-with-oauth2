@@ -6,7 +6,6 @@ import me.choicore.likeapuppy.core.domain.user.model.aggregate.Account
 import me.choicore.likeapuppy.core.domain.user.service.internal.AccountCommandProcessor
 import me.choicore.likeapuppy.core.domain.user.service.internal.AccountQueryProcessor
 import me.choicore.likeapuppy.identityprovider.common.Slf4j
-import me.choicore.likeapuppy.identityprovider.exception.UnauthorizedException
 import org.slf4j.Logger
 import org.springframework.context.event.EventListener
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent
@@ -46,8 +45,6 @@ class AuthenticationEventListener(
             val account: Account = getAccount(username)
             val accountAuthentication: Authentication = account.authentication.markAsLoggedIn()
             accountCommand.modifyAccountAuthentication(account.id, accountAuthentication)
-        } else {
-            throw UnauthorizedException.UnknownError
         }
     }
 

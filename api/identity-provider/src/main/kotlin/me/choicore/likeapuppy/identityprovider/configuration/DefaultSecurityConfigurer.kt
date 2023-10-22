@@ -1,6 +1,5 @@
 package me.choicore.likeapuppy.identityprovider.configuration
 
-import me.choicore.likeapuppy.core.common.Encryptor
 import me.choicore.likeapuppy.identityprovider.authentication.FormLoginAuthenticationFailureHandler
 import me.choicore.likeapuppy.identityprovider.authentication.FormLoginAuthenticationSuccessHandler
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console
@@ -60,13 +59,6 @@ class DefaultSecurityConfigurer {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
-
-    @Bean
-    fun encrypt(passwordEncoder: PasswordEncoder): Encryptor = object : Encryptor {
-        override fun encode(rawPassword: String): String {
-            return passwordEncoder.encode(rawPassword)
-        }
-    }
 
     @Bean
     fun authenticationEventPublisher(applicationEventPublisher: ApplicationEventPublisher): AuthenticationEventPublisher {

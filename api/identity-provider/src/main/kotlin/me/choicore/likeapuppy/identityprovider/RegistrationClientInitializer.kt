@@ -27,7 +27,6 @@ class RegistrationClientInitializer(
                 .clientAuthenticationMethods { clientAuthenticationMethod: MutableSet<ClientAuthenticationMethod> ->
                     clientAuthenticationMethod.add(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                     clientAuthenticationMethod.add(ClientAuthenticationMethod.CLIENT_SECRET_POST)
-                    clientAuthenticationMethod.add(ClientAuthenticationMethod.NONE)
                 }
                 .authorizationGrantTypes { authorizationGrantType: MutableSet<AuthorizationGrantType> ->
                     authorizationGrantType.add(AuthorizationGrantType.AUTHORIZATION_CODE)
@@ -39,9 +38,9 @@ class RegistrationClientInitializer(
                     redirectUri.add("http://localhost:8080/login/oauth2/code/like-a-puppy-developer-client")
                 }
                 .scope(OidcScopes.OPENID)
-                .scope(OidcScopes.PROFILE)
-                .scope(OidcScopes.PHONE)
                 .scope(OidcScopes.EMAIL)
+//                .scope(OidcScopes.PROFILE)
+//                .scope(OidcScopes.PHONE)
                 .tokenSettings(
                     Builder.tokenSettings {
                         accessTokenTimeToLive(Duration.ofHours(2))
@@ -51,7 +50,7 @@ class RegistrationClientInitializer(
                 .clientSettings(
                     Builder.clientSettings {
                         requireAuthorizationConsent(true)
-                        // requireProofKey(true)
+                        requireProofKey(true)
                     },
                 )
                 .build()

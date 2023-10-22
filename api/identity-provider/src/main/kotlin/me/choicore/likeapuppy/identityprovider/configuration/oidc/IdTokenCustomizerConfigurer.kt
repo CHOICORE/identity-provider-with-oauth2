@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class IdTokenCustomizerConfigurer {
 
     @Bean

@@ -11,6 +11,10 @@ class OidcUserInfoLoader {
     }
 
     private fun loadUserAttributes(username: String): Map<String, Any> {
-        TODO()
+        return OidcUserInfo.builder()
+            .subject(username)
+//            .email(username)
+//            .emailVerified(true)
+            .build().claims
     }
 }
