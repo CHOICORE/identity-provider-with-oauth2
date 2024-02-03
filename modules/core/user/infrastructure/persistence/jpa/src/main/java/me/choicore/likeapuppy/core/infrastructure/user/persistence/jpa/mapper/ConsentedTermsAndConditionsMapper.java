@@ -18,7 +18,9 @@ public class ConsentedTermsAndConditionsMapper {
     }
 
     public static List<ConsentedTermsAndConditions> toDomains(List<UserConsentedTermsAndConditionsEntity> entities) {
-        if (entities.isEmpty()) return Collections.emptyList();
+        if (entities.isEmpty()) {
+            return Collections.emptyList();
+        }
 
         return entities.stream()
                 .map(ConsentedTermsAndConditionsMapper::toDomain)
@@ -26,7 +28,9 @@ public class ConsentedTermsAndConditionsMapper {
     }
 
     public static ConsentedTermsAndConditions toDomain(UserConsentedTermsAndConditionsEntity entity) {
-        if (entity == null) return null;
+        if (entity == null) {
+            return null;
+        }
 
         return new ConsentedTermsAndConditions(
                 // TermsAndConditionsModelMapper.toDomain(entity.getTermsAndConditionsId()),

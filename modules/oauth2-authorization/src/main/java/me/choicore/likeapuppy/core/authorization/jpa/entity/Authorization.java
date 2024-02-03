@@ -17,6 +17,7 @@ import java.time.Instant;
 @Table(name = "authorization")
 @NoArgsConstructor
 public class Authorization {
+
     @Id
     @Column
     private String id;

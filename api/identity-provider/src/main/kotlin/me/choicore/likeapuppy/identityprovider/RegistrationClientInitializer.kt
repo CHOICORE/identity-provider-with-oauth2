@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.server.authorization.settings.ClientS
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings
 import org.springframework.stereotype.Component
 import java.time.Duration
-import java.util.UUID
+import java.util.*
 
 @Component
 class RegistrationClientInitializer(
@@ -20,10 +20,12 @@ class RegistrationClientInitializer(
     private val passwordEncoder: PasswordEncoder,
 ) : ApplicationRunner {
     override fun run(args: ApplicationArguments) {
+        val encodedSecret = passwordEncoder.encode("like-a-puppy-secret")
+        println("encoded >>>>>>>>> $encodedSecret")
         val registeredClient: RegisteredClient =
             RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("like-a-puppy")
-                .clientSecret(passwordEncoder.encode("like-a-puppy-secret"))
+                .clientSecret(encodedSecret)
                 .clientAuthenticationMethods { clientAuthenticationMethod: MutableSet<ClientAuthenticationMethod> ->
                     clientAuthenticationMethod.add(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                     clientAuthenticationMethod.add(ClientAuthenticationMethod.CLIENT_SECRET_POST)
@@ -38,9 +40,7 @@ class RegistrationClientInitializer(
                     redirectUri.add("http://localhost:8080/login/oauth2/code/like-a-puppy-developer-client")
                 }
                 .scope(OidcScopes.OPENID)
-                .scope(OidcScopes.EMAIL)
-//                .scope(OidcScopes.PROFILE)
-//                .scope(OidcScopes.PHONE)
+                .scope(OidcScopes.PROFILE)
                 .tokenSettings(
                     Builder.tokenSettings {
                         accessTokenTimeToLive(Duration.ofHours(2))
@@ -50,7 +50,7 @@ class RegistrationClientInitializer(
                 .clientSettings(
                     Builder.clientSettings {
                         requireAuthorizationConsent(true)
-                        requireProofKey(true)
+//                        requireProofKey(true)
                     },
                 )
                 .build()

@@ -2,7 +2,6 @@ package me.choicore.likeapuppy.core.infrastructure.user.persistence.jpa.entity;
 
 /**
  * 사용자 상태 열거형 상수 정의
- * <p/>
  * PENDING: 대기
  * ACTIVE: 활성화
  * INACTIVE: 비활성화

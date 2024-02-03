@@ -7,7 +7,10 @@ import me.choicore.likeapuppy.core.authorization.jpa.entity.Authorization;
 import me.choicore.likeapuppy.core.authorization.jpa.repository.AuthorizationRepository;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
-import org.springframework.security.oauth2.core.*;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import org.springframework.security.oauth2.core.OAuth2UserCode;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
@@ -168,7 +171,7 @@ public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService
         }
 
         if (entity.getDeviceCodeValue() != null) {
-            OAuth2DeviceCode deviceCode = new OAuth2DeviceCode(
+            org.springframework.security.oauth2.core.OAuth2DeviceCode deviceCode = new org.springframework.security.oauth2.core.OAuth2DeviceCode(
                     entity.getDeviceCodeValue(),
                     entity.getDeviceCodeIssuedAt(),
                     entity.getDeviceCodeExpiresAt());
@@ -211,8 +214,8 @@ public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService
             entity.setAccessTokenScopes(StringUtils.collectionToDelimitedString(accessToken.getToken().getScopes(), ","));
         }
 
-        OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken =
-                authorization.getToken(OAuth2RefreshToken.class);
+        OAuth2Authorization.Token<org.springframework.security.oauth2.core.OAuth2RefreshToken> refreshToken =
+                authorization.getToken(org.springframework.security.oauth2.core.OAuth2RefreshToken.class);
         setTokenValues(
                 refreshToken,
                 entity::setRefreshTokenValue,
@@ -234,8 +237,8 @@ public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService
             entity.setOidcIdTokenClaims(writeMap(oidcIdToken.getClaims()));
         }
 
-        OAuth2Authorization.Token<OAuth2UserCode> userCode =
-                authorization.getToken(OAuth2UserCode.class);
+        OAuth2Authorization.Token<org.springframework.security.oauth2.core.OAuth2UserCode> userCode =
+                authorization.getToken(org.springframework.security.oauth2.core.OAuth2UserCode.class);
         setTokenValues(
                 userCode,
                 entity::setUserCodeValue,
@@ -244,8 +247,8 @@ public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService
                 entity::setUserCodeMetadata
         );
 
-        OAuth2Authorization.Token<OAuth2DeviceCode> deviceCode =
-                authorization.getToken(OAuth2DeviceCode.class);
+        OAuth2Authorization.Token<org.springframework.security.oauth2.core.OAuth2DeviceCode> deviceCode =
+                authorization.getToken(org.springframework.security.oauth2.core.OAuth2DeviceCode.class);
         setTokenValues(
                 deviceCode,
                 entity::setDeviceCodeValue,
@@ -264,7 +267,7 @@ public class JpaOAuth2AuthorizationService implements OAuth2AuthorizationService
             Consumer<Instant> expiresAtConsumer,
             Consumer<String> metadataConsumer) {
         if (token != null) {
-            OAuth2Token oAuth2Token = token.getToken();
+            org.springframework.security.oauth2.core.OAuth2Token oAuth2Token = token.getToken();
             tokenValueConsumer.accept(oAuth2Token.getTokenValue());
             issuedAtConsumer.accept(oAuth2Token.getIssuedAt());
             expiresAtConsumer.accept(oAuth2Token.getExpiresAt());

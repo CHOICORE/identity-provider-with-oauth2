@@ -77,4 +77,6 @@ public class UserEntity {
     public void updateAuthentication(AuthenticationEntity authentication) {
         this.authentication = authentication;
     }
+
+
 }

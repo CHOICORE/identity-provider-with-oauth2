@@ -1,6 +1,6 @@
 package me.choicore.likeapuppy.identityprovider.common
 
-import java.util.Optional
+import java.util.*
 
 internal fun <T : Any> Optional<T>.toNullable(): T? = this.orElse(null)
 

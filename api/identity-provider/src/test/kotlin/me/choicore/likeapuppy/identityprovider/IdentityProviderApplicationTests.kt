@@ -31,7 +31,7 @@ class IdentityProviderApplicationTests(
             .fromPath(AUTHORIZATION_URI)
             .queryParam("response_type", "code")
             .queryParam("client_id", "like-a-puppy")
-            .queryParam("client_secret", "like-a-puppy")
+            .queryParam("client_secret", "like-a-puppy-secret")
             .queryParam("scope", "openid")
             .queryParam("state", "state")
             .queryParam("redirect_uri", REDIRECT_URI)
@@ -52,7 +52,7 @@ class IdentityProviderApplicationTests(
         }
 
         private fun assertLoginPage(page: HtmlPage) {
-            Assertions.assertThat(page.getUrl().toString()).endsWith("/login")
+            Assertions.assertThat(page.url.toString()).endsWith("/login")
             val usernameInput: HtmlInput = page.querySelector("input[name=\"username\"]")
             val passwordInput: HtmlInput = page.querySelector("input[name=\"password\"]")
             val loginButton: HtmlButton = page.querySelector("button")

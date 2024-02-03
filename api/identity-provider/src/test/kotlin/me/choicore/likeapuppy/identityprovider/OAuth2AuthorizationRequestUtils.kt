@@ -5,7 +5,7 @@ import org.springframework.security.crypto.keygen.StringKeyGenerator
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
-import java.util.Base64
+import java.util.*
 
 private val DEFAULT_STATE_GENERATOR: StringKeyGenerator = Base64StringKeyGenerator(
     Base64.getUrlEncoder(),

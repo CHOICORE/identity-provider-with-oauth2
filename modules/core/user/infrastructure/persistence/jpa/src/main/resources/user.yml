@@ -15,18 +15,19 @@ spring:
     show-sql: false
     database: h2
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
 
     properties:
       hibernate:
         format_sql: false
         auto_quote_keyword: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
 
     defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
 
   datasource:
-    url: jdbc:h2:mem:local;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem://localhost/~/test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;DATABASE_TO_LOWER=TRUE
     username: local
     password:
-    driverClassName: org.h2.Driver

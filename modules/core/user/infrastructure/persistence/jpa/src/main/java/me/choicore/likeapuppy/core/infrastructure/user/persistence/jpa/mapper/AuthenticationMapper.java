@@ -19,8 +19,8 @@ public class AuthenticationMapper {
         validateNotNull(entity, "Authentication Entity is invalid must not be null");
         return toDomain(
                 entity.getFailedLoginAttempts(),
-                entity.getLastLoggedInAt(),
-                entity.getPasswordExpirationAt()
+                entity.getPasswordExpirationAt(),
+                entity.getLastLoggedInAt()
         );
     }
 

@@ -1,15 +1,15 @@
-INSERT INTO `USER`( USER_ID
-                  , EMAIL
-                  , PASSWORD
-                  , PHONE_NUMBER
-                  , PASSWORD_EXPIRATION_AT
-                  , FAILED_LOGIN_ATTEMPTS
-                  , LAST_LOGGED_IN_AT
-                  , EMAIL_VERIFIED
-                  , EMAIL_VERIFIED_AT
-                  , PHONE_NUMBER_VERIFIED
-                  , PHONE_NUMBER_VERIFIED_AT
-                  , REGISTERED_AT)
+INSERT INTO `USER` ( USER_ID
+                   , EMAIL
+                   , PASSWORD
+                   , PHONE_NUMBER
+                   , PASSWORD_EXPIRATION_AT
+                   , FAILED_LOGIN_ATTEMPTS
+                   , LAST_LOGGED_IN_AT
+                   , EMAIL_VERIFIED
+                   , EMAIL_VERIFIED_AT
+                   , PHONE_NUMBER_VERIFIED
+                   , PHONE_NUMBER_VERIFIED_AT
+                   , REGISTERED_AT)
 VALUES ( '2'
        , '2'
        , '{noop}2'
@@ -21,21 +21,32 @@ VALUES ( '2'
        , now()
        , true
        , now()
-       , now()),
-       ( '1'
+       , now());
+
+INSERT INTO `USER` ( USER_ID
+                   , EMAIL
+                   , PASSWORD
+                   , PHONE_NUMBER
+                   , PASSWORD_EXPIRATION_AT
+                   , FAILED_LOGIN_ATTEMPTS
+                   , LAST_LOGGED_IN_AT
+                   , EMAIL_VERIFIED
+                   , EMAIL_VERIFIED_AT
+                   , PHONE_NUMBER_VERIFIED
+                   , PHONE_NUMBER_VERIFIED_AT
+                   , REGISTERED_AT)
+VALUES ( '1'
        , '1'
        , '{noop}1'
        , '1'
-       , now()
+       , DATEADD('DAY', 1, NOW())
        , 0
        , now()
        , true
        , now()
        , true
        , now()
-       , now())
-;
-
+       , now());
 
 INSERT INTO TERMS_AND_CONDITIONS( SUBJECT
                                 , CONTENT
